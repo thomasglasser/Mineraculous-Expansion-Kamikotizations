@@ -46,6 +46,52 @@ repositories {
 		}
 		filter { includeGroupAndSubgroups "mezz.jei" }
 	}
+	exclusiveContent {
+		forRepository {
+			maven {
+				name = 'GeckoLib'
+				url = 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
+			}
+		}
+		filter {
+			includeGroupAndSubgroups 'software.bernie.geckolib'
+			includeGroupAndSubgroups 'com.eliotlash.mclib'
+		}
+	}
+	exclusiveContent {
+		forRepository {
+			maven {
+				name = 'SmartBrainLib'
+				url = "https://dl.cloudsmith.io/public/tslat/sbl/maven/"
+			}
+		}
+		filter { includeGroupAndSubgroups 'net.tslat.smartbrainlib' }
+	}
+	exclusiveContent {
+		forRepository {
+			maven {
+				name = 'Curios'
+				url = "https://maven.theillusivec4.top/"
+			}
+		}
+		filter { includeGroupAndSubgroups 'top.theillusivec4.curios' }
+	}
+	exclusiveContent {
+		forRepository {
+			maven {
+				name = 'Modonomicon'
+				url = "https://dl.cloudsmith.io/public/klikli-dev/mods/maven/"
+			}
+		}
+		filter { includeGroupAndSubgroups "com.klikli_dev" }
+	}
+	maven {
+		name = 'Mineraculous'
+		url = 'https://dl.cloudsmith.io/public/thomasglasser/mineraculous/maven/'
+		content {
+			includeGroupAndSubgroups("dev.thomasglasser.mineraculous")
+		}
+	}
 	maven {
 		name = 'TommyLib'
 		url = 'https://dl.cloudsmith.io/public/thomasglasser/tommylib/maven/'
@@ -103,7 +149,7 @@ neoForge {
 	}
 
 	mods {
-		neoforgetemplate {
+		mineraculouskamikotizations {
 			sourceSet sourceSets.main
 		}
 	}
@@ -117,6 +163,8 @@ configurations {
 
 dependencies {
 	jarJar implementation("dev.thomasglasser.tommylib:tommylib-neoforge-${minecraft_version}:${tommylib_version}")
+
+	implementation "dev.thomasglasser.mineraculous:mineraculous-${minecraft_version}:${mineraculous_version}"
 
 	// Runtime
 	localRuntime "maven.modrinth:jade:${jade_version}+neoforge"
@@ -198,7 +246,8 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
             java_version: java_version,
             icon: icon,
             github_name: github_name,
-            tommylib_version: tommylib_version
+            tommylib_version: tommylib_version,
+			mineraculous_version: mineraculous_version
     ]
     inputs.properties replaceProperties
     expand replaceProperties

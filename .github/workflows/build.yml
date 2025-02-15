@@ -27,8 +27,7 @@ jobs:
       - name: Upload Jars
         uses: actions/upload-artifact@v4
         with:
-          # Replace with mod name
-          name: NeoForge Template
+          name: 'Mineraculous Expansion: Kamikotizations'
           if-no-files-found: error
           path: |
             build/libs
