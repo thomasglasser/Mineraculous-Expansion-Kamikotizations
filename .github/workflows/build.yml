@@ -27,7 +27,7 @@ jobs:
       - name: Upload Jars
         uses: actions/upload-artifact@v4
         with:
-          name: 'Mineraculous Expansion: Kamikotizations'
+          name: Mineraculous Expansion Kamikotizations
           if-no-files-found: error
           path: |
             build/libs
