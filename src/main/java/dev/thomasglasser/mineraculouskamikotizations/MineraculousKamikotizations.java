@@ -1,5 +1,6 @@
 package dev.thomasglasser.mineraculouskamikotizations;
 
+import dev.thomasglasser.tommylib.api.platform.TommyLibServices;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
@@ -12,7 +13,9 @@ public class MineraculousKamikotizations {
     public static final String MOD_NAME = "Mineraculous Expansion: Kamikotizations";
     private static final Logger LOGGER = LoggerFactory.getLogger(MOD_NAME);
 
-    public MineraculousKamikotizations(IEventBus modEventBus) {}
+    public MineraculousKamikotizations(IEventBus modEventBus) {
+        LOGGER.info("Initializing {} for {} in a {} environment...", MOD_NAME, TommyLibServices.PLATFORM.getPlatformName(), TommyLibServices.PLATFORM.getEnvironmentName());
+    }
 
     public static ResourceLocation modLoc(String path) {
         return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
