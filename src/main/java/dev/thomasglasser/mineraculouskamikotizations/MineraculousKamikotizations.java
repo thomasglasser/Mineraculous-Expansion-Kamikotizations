@@ -1,5 +1,7 @@
 package dev.thomasglasser.mineraculouskamikotizations;
 
+import dev.thomasglasser.mineraculouskamikotizations.data.MineraculousKamikotizationsDataGenerators;
+import dev.thomasglasser.mineraculouskamikotizations.world.item.MineraculousKamikotizationsItems;
 import dev.thomasglasser.tommylib.api.platform.TommyLibServices;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
@@ -15,6 +17,10 @@ public class MineraculousKamikotizations {
 
     public MineraculousKamikotizations(IEventBus modEventBus) {
         LOGGER.info("Initializing {} for {} in a {} environment...", MOD_NAME, TommyLibServices.PLATFORM.getPlatformName(), TommyLibServices.PLATFORM.getEnvironmentName());
+
+        MineraculousKamikotizationsItems.init();
+
+        modEventBus.addListener(MineraculousKamikotizationsDataGenerators::onGatherData);
     }
 
     public static ResourceLocation modLoc(String path) {
