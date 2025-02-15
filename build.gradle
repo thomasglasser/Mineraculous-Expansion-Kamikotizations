@@ -1,0 +1,286 @@
+import java.util.regex.Matcher
+import java.util.regex.Pattern
+
+plugins {
+    id 'idea'
+    id 'java-library'
+	id 'maven-publish'
+	id 'signing'
+	id 'dev.lukebemish.immaculate' version '0.1.6'
+	id 'net.neoforged.moddev' version "${mdg_version}"
+}
+
+tasks.named('wrapper', Wrapper).configure {
+	distributionType = Wrapper.DistributionType.BIN
+}
+
+version = mod_version
+group = mod_group_id
+
+base {
+	archivesName = "${mod_id}-${minecraft_version}"
+}
+
+java {
+	toolchain.languageVersion = JavaLanguageVersion.of(java_version)
+	withSourcesJar()
+	withJavadocJar()
+}
+
+repositories {
+	exclusiveContent {
+		forRepository {
+			maven {
+				name = 'Modrinth'
+				url = 'https://api.modrinth.com/maven'
+			}
+		}
+		filter { includeGroupAndSubgroups "maven.modrinth" }
+	}
+	exclusiveContent {
+		forRepository {
+			maven {
+				name = 'JEI'
+				url = 'https://maven.blamejared.com/'
+			}
+		}
+		filter { includeGroupAndSubgroups "mezz.jei" }
+	}
+	maven {
+		name = 'TommyLib'
+		url = 'https://dl.cloudsmith.io/public/thomasglasser/tommylib/maven/'
+		content {
+			includeGroupAndSubgroups("dev.thomasglasser.tommylib")
+		}
+	}
+	maven {
+		name = 'NeoForge'
+		url = 'https://maven.neoforged.net/releases'
+	}
+	maven {
+		name = 'Mojang Meta'
+		url = 'https://maven.neoforged.net/mojang-meta'
+	}
+	mavenCentral()
+	mavenLocal()
+}
+
+neoForge {
+    // Specify the version of NeoForge to use.
+    version = project.neoforge_version
+
+    parchment {
+        mappingsVersion = project.parchment_mappings_version
+        minecraftVersion = project.parchment_minecraft_version
+    }
+
+    // This line is optional. Access Transformers are automatically detected
+    // accessTransformers = project.files('src/main/resources/META-INF/accesstransformer.cfg')
+
+	runs {
+		client {
+			client()
+			ideName = "Client"
+			gameDirectory = project.layout.projectDirectory.dir('runs/client')
+		}
+		client_alt {
+			client()
+			ideName = "Client 2"
+			gameDirectory = project.layout.projectDirectory.dir('runs/client_alt')
+			programArguments = ["--username", "DevAlt"]
+		}
+		server {
+			server()
+			ideName = "Server"
+			gameDirectory = project.layout.projectDirectory.dir('runs/server')
+		}
+		data {
+			data()
+			ideName = "Data Generation"
+			gameDirectory = project.layout.projectDirectory.dir('runs/data')
+			programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
+		}
+	}
+
+	mods {
+		neoforgetemplate {
+			sourceSet sourceSets.main
+		}
+	}
+}
+
+sourceSets.main.resources { srcDir 'src/generated/resources' }
+
+configurations {
+	runtimeClasspath.extendsFrom localRuntime
+}
+
+dependencies {
+	jarJar implementation("dev.thomasglasser.tommylib:tommylib-neoforge-${minecraft_version}:${tommylib_version}")
+
+	// Runtime
+	localRuntime "maven.modrinth:jade:${jade_version}+neoforge"
+	localRuntime "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
+}
+
+immaculate {
+	workflows.register('java') {
+		java()
+		files.from rootProject.fileTree("src", {
+			include "**/*.java"
+		})
+		noTabs()
+		googleFixImports()
+		toggleOff = 'spotless:off'
+		toggleOn = 'spotless:on'
+		eclipse {
+			version '3.37.0'
+			config = rootProject.file('codeformat/formatter-config.xml')
+		}
+
+
+		// courtesy of diffplug/spotless#240
+		// https://github.com/diffplug/spotless/issues/240#issuecomment-385206606
+		custom 'noWildcardImports', { String fileContents ->
+			if (fileContents.contains('*;\n')) {
+				throw new GradleException('No wildcard imports are allowed!')
+			}
+		}
+
+		custom 'noNotNull', { String fileContents ->
+			if (fileContents.contains('@NotNull') || fileContents.contains('@Nonnull')) {
+				throw new GradleException('@NotNull and @Nonnull are disallowed.')
+			}
+		}
+
+		//Trim any trailing whitespace from patch additions
+		def trailingWhitespace = Pattern.compile('^\\+.*[ \t]+\$', Pattern.UNIX_LINES | Pattern.MULTILINE)
+		custom 'trimTrailingWhitespace', { String fileContents ->
+			Matcher matcher = trailingWhitespace.matcher(fileContents)
+			StringBuilder sb = new StringBuilder()
+			while (matcher.find()) {
+				matcher.appendReplacement(sb, matcher.group().trim())
+			}
+			matcher.appendTail(sb)
+			return sb.toString()
+		}
+
+		custom 'jetbrainsNullable', { String fileContents ->
+			fileContents.replace('javax.annotation.Nullable', 'org.jetbrains.annotations.Nullable')
+		}
+	}
+}
+
+tasks.named('compileJava') {
+	dependsOn 'immaculateApply'
+}
+
+javadoc {
+    failOnError = false
+}
+
+// This block of code expands all declared replace properties in the specified resource targets.
+// A missing property will result in an error. Properties are expanded using ${} Groovy notation.
+var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
+    var replaceProperties = [
+            version: mod_version,
+            group: mod_group_id,
+            minecraft_version: minecraft_version,
+            next_minecraft_version: next_minecraft_version,
+            mod_name: mod_name,
+            mod_author: mod_author,
+            mod_id: mod_id,
+            license: license,
+            description: project.description,
+            neoforge_version: neoforge_version,
+            major_fml_version: major_fml_version,
+            contributors: contributors,
+            java_version: java_version,
+            icon: icon,
+            github_name: github_name,
+            tommylib_version: tommylib_version
+    ]
+    inputs.properties replaceProperties
+    expand replaceProperties
+    from "src/main/templates"
+    into "build/generated/sources/modMetadata"
+}
+
+sourceSets.main.resources.srcDir generateModMetadata
+neoForge.ideSyncTask generateModMetadata
+
+publishing {
+	publications {
+		register('mavenJava', MavenPublication) {
+			artifactId base.archivesName.get()
+			from components.java
+		}
+
+		maven(MavenPublication) {
+			pom {
+				name = project.mod_name
+				description = project.description
+				url = "https://github.com/thomasglasser/${github_name}/wiki"
+				licenses {
+					license {
+						name = project.license
+						url = "https://github.com/thomasglasser/${github_name}/blob/${minecraft_version}/LICENSE.md"
+					}
+				}
+				developers {
+					developer {
+						id = project.mod_author
+						name = project.mod_author
+					}
+				}
+				issueManagement {
+					system = 'GitHub'
+					url = "https://github.com/thomasglasser/${github_name}/issues"
+				}
+				scm {
+					connection = "scm:git:git://github.com/thomasglasser/${github_name}.git"
+					developerConnection = "scm:git:ssh://github.com:thomasglasser/${github_name}.git"
+					url = "https://github.com/thomasglasser/${github_name}/tree/${minecraft_version}"
+				}
+			}
+		}
+	}
+
+	repositories {
+		maven {
+			name = "Cloudsmith"
+			url = "https://maven.cloudsmith.io/thomasglasser/${mod_id}/"
+			credentials {
+				username = project.findProperty("CLOUDSMITH_USERNAME") ?: System.getenv("CLOUDSMITH_USERNAME")
+				password = project.findProperty("CLOUDSMITH_API_KEY") ?: System.getenv("CLOUDSMITH_API_KEY")
+			}
+		}
+	}
+}
+
+signing {
+	useGpgCmd()
+	sign publishing.publications
+}
+
+['apiElements', 'runtimeElements', 'sourcesElements', 'javadocElements'].each { variant ->
+	configurations."$variant".outgoing {
+		capability("$group:${base.archivesName.get()}:$version")
+		capability("$group:$mod_id-${project.name}-${minecraft_version}:$version")
+		capability("$group:$mod_id:$version")
+	}
+	publishing.publications.configureEach {
+		suppressPomMetadataWarningsFor(variant)
+	}
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+idea {
+    module {
+        downloadSources = true
+        downloadJavadoc = true
+    }
+}
