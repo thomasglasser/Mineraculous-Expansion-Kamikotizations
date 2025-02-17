@@ -3,7 +3,9 @@ package dev.thomasglasser.mineraculouskamikotizations.data;
 import dev.thomasglasser.mineraculous.core.registries.MineraculousRegistries;
 import dev.thomasglasser.mineraculouskamikotizations.MineraculousKamikotizations;
 import dev.thomasglasser.mineraculouskamikotizations.data.advancements.MineraculousKamikotizationsAdvancementProvider;
+import dev.thomasglasser.mineraculouskamikotizations.data.datamaps.MineraculousKamikotizationsDataMapProvider;
 import dev.thomasglasser.mineraculouskamikotizations.data.lang.MineraculousKamikotizationsEnUsLanguageProvider;
+import dev.thomasglasser.mineraculouskamikotizations.data.loot.MineraculousKamikotizationsLootTables;
 import dev.thomasglasser.mineraculouskamikotizations.data.tags.MineraculousKamikotizationsItemTagsProvider;
 import dev.thomasglasser.mineraculouskamikotizations.world.entity.kamikotization.MineraculousKamikotizationsKamikotizations;
 import java.util.Set;
@@ -36,6 +38,8 @@ public class MineraculousKamikotizationsDataGenerators {
         registries = datapackBuiltinEntriesProvider.getRegistryProvider();
         generator.addProvider(includeServer, new MineraculousKamikotizationsItemTagsProvider(packOutput, registries, CompletableFuture.completedFuture(null), existingFileHelper));
         generator.addProvider(includeServer, new MineraculousKamikotizationsAdvancementProvider(packOutput, registries, existingFileHelper, enUs));
+        generator.addProvider(includeServer, new MineraculousKamikotizationsDataMapProvider(packOutput, registries));
+        generator.addProvider(includeServer, new MineraculousKamikotizationsLootTables(packOutput, registries));
 
         generator.addProvider(includeClient, enUs);
     }
