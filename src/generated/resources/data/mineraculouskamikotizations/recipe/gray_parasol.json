@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "c": {
+      "item": "minecraft:gray_carpet"
+    },
+    "s": {
+      "tag": "c:rods/wooden"
+    }
+  },
+  "pattern": [
+    " c ",
+    "csc",
+    " s "
+  ],
+  "result": {
+    "count": 1,
+    "id": "mineraculouskamikotizations:gray_parasol"
+  }
+}

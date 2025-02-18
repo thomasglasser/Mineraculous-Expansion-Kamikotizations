@@ -5,6 +5,7 @@ import dev.thomasglasser.mineraculouskamikotizations.core.component.Mineraculous
 import dev.thomasglasser.mineraculouskamikotizations.data.MineraculousKamikotizationsDataGenerators;
 import dev.thomasglasser.mineraculouskamikotizations.network.MineraculousKamikotizationsPayloads;
 import dev.thomasglasser.mineraculouskamikotizations.world.attachment.MineraculousKamikotizationsAttachmentTypes;
+import dev.thomasglasser.mineraculouskamikotizations.world.item.MineraculousKamikotizationsCreativeModeTabs;
 import dev.thomasglasser.mineraculouskamikotizations.world.item.MineraculousKamikotizationsItems;
 import dev.thomasglasser.tommylib.api.platform.TommyLibServices;
 import net.minecraft.resources.ResourceLocation;
@@ -25,6 +26,7 @@ public class MineraculousKamikotizations {
         MineraculousKamikotizationsDataComponents.init();
         MineraculousKamikotizationsItems.init();
         MineraculousKamikotizationsAttachmentTypes.init();
+        MineraculousKamikotizationsCreativeModeTabs.init();
 
         bus.addListener(MineraculousKamikotizationsDataGenerators::onGatherData);
 

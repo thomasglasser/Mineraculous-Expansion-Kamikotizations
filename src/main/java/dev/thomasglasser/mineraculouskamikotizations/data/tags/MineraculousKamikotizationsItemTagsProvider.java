@@ -18,8 +18,26 @@ public class MineraculousKamikotizationsItemTagsProvider extends ExtendedItemTag
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
+        tag(MineraculousKamikotizationsItemTags.PARASOLS)
+                .add(MineraculousKamikotizationsItems.WHITE_PARASOL.get())
+                .add(MineraculousKamikotizationsItems.ORANGE_PARASOL.get())
+                .add(MineraculousKamikotizationsItems.MAGENTA_PARASOL.get())
+                .add(MineraculousKamikotizationsItems.LIGHT_BLUE_PARASOL.get())
+                .add(MineraculousKamikotizationsItems.YELLOW_PARASOL.get())
+                .add(MineraculousKamikotizationsItems.LIME_PARASOL.get())
+                .add(MineraculousKamikotizationsItems.PINK_PARASOL.get())
+                .add(MineraculousKamikotizationsItems.GRAY_PARASOL.get())
+                .add(MineraculousKamikotizationsItems.LIGHT_GRAY_PARASOL.get())
+                .add(MineraculousKamikotizationsItems.CYAN_PARASOL.get())
+                .add(MineraculousKamikotizationsItems.PURPLE_PARASOL.get())
+                .add(MineraculousKamikotizationsItems.BLUE_PARASOL.get())
+                .add(MineraculousKamikotizationsItems.BROWN_PARASOL.get())
+                .add(MineraculousKamikotizationsItems.GREEN_PARASOL.get())
+                .add(MineraculousKamikotizationsItems.RED_PARASOL.get())
+                .add(MineraculousKamikotizationsItems.BLACK_PARASOL.get());
+
         tag(MineraculousKamikotizationsItemTags.UMBRELLA_TOOLS)
-                .add(MineraculousKamikotizationsItems.PARASOL.get())
+                .addTag(MineraculousKamikotizationsItemTags.PARASOLS)
                 .add(MineraculousKamikotizationsItems.WEATHER_CONTROL_PARASOL.get());
 
         tag(ConventionalItemTags.TOOLS)

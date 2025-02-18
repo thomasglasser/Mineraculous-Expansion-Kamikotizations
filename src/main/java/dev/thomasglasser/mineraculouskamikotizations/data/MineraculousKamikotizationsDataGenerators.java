@@ -6,8 +6,10 @@ import dev.thomasglasser.mineraculouskamikotizations.data.advancements.Mineracul
 import dev.thomasglasser.mineraculouskamikotizations.data.datamaps.MineraculousKamikotizationsDataMapProvider;
 import dev.thomasglasser.mineraculouskamikotizations.data.lang.MineraculousKamikotizationsEnUsLanguageProvider;
 import dev.thomasglasser.mineraculouskamikotizations.data.loot.MineraculousKamikotizationsLootTables;
+import dev.thomasglasser.mineraculouskamikotizations.data.recipes.MineraculousKamikotizationsRecipeProvider;
 import dev.thomasglasser.mineraculouskamikotizations.data.tags.MineraculousKamikotizationsItemTagsProvider;
 import dev.thomasglasser.mineraculouskamikotizations.world.entity.kamikotization.MineraculousKamikotizationsKamikotizations;
+import dev.thomasglasser.tommylib.api.data.info.ModRegistryDumpReport;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import net.minecraft.core.HolderLookup;
@@ -36,10 +38,12 @@ public class MineraculousKamikotizationsDataGenerators {
         DatapackBuiltinEntriesProvider datapackBuiltinEntriesProvider = new DatapackBuiltinEntriesProvider(packOutput, registries, BUILDER, Set.of(MineraculousKamikotizations.MOD_ID));
         generator.addProvider(includeServer, datapackBuiltinEntriesProvider);
         registries = datapackBuiltinEntriesProvider.getRegistryProvider();
+        generator.addProvider(includeServer, new ModRegistryDumpReport(packOutput, MineraculousKamikotizations.MOD_ID, registries));
         generator.addProvider(includeServer, new MineraculousKamikotizationsItemTagsProvider(packOutput, registries, CompletableFuture.completedFuture(null), existingFileHelper));
         generator.addProvider(includeServer, new MineraculousKamikotizationsAdvancementProvider(packOutput, registries, existingFileHelper, enUs));
         generator.addProvider(includeServer, new MineraculousKamikotizationsDataMapProvider(packOutput, registries));
         generator.addProvider(includeServer, new MineraculousKamikotizationsLootTables(packOutput, registries));
+        generator.addProvider(includeServer, new MineraculousKamikotizationsRecipeProvider(packOutput, registries));
 
         generator.addProvider(includeClient, enUs);
     }

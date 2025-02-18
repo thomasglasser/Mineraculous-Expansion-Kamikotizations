@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_parasol": {
+      "conditions": {
+        "items": [
+          {
+            "items": "mineraculouskamikotizations:black_parasol"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "mineraculouskamikotizations:black_parasol_from_dye"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_parasol"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "mineraculouskamikotizations:black_parasol_from_dye"
+    ]
+  }
+}

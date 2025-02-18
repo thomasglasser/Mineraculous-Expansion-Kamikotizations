@@ -1,0 +1,30 @@
+{
+  "minecraft:creative_mode_tab": [
+    "mineraculouskamikotizations:mineraculouskamikotizations"
+  ],
+  "minecraft:data_component_type": [
+    "mineraculouskamikotizations:weather_control_parasol_ability"
+  ],
+  "minecraft:item": [
+    "mineraculouskamikotizations:black_parasol",
+    "mineraculouskamikotizations:blue_parasol",
+    "mineraculouskamikotizations:brown_parasol",
+    "mineraculouskamikotizations:cyan_parasol",
+    "mineraculouskamikotizations:gray_parasol",
+    "mineraculouskamikotizations:green_parasol",
+    "mineraculouskamikotizations:light_blue_parasol",
+    "mineraculouskamikotizations:light_gray_parasol",
+    "mineraculouskamikotizations:lime_parasol",
+    "mineraculouskamikotizations:magenta_parasol",
+    "mineraculouskamikotizations:orange_parasol",
+    "mineraculouskamikotizations:pink_parasol",
+    "mineraculouskamikotizations:purple_parasol",
+    "mineraculouskamikotizations:red_parasol",
+    "mineraculouskamikotizations:weather_control_parasol",
+    "mineraculouskamikotizations:white_parasol",
+    "mineraculouskamikotizations:yellow_parasol"
+  ],
+  "mineraculous:kamikotization": [
+    "mineraculouskamikotizations:weather_control"
+  ]
+}
