@@ -94,6 +94,10 @@ public class WeatherControlParasolItem extends Item implements KamikotizedPowerS
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand usedHand) {
         ItemStack itemStack = player.getItemInHand(usedHand);
         Ability ability = itemStack.get(MineraculousKamikotizationsDataComponents.WEATHER_CONTROL_PARASOL_ABILITY);
+        ResolvableProfile resolvableProfile = itemStack.get(DataComponents.PROFILE);
+        Player owner = resolvableProfile != null ? player.level().getPlayerByUUID(resolvableProfile.id().orElse(resolvableProfile.gameProfile().getId())) : null;
+        if (owner == null)
+            owner = player;
         if (ability == null) return InteractionResultHolder.fail(itemStack);
         ServerLevel overworld = level.getServer() != null ? level.getServer().overworld() : null;
         if (ability == Ability.ICE) {
@@ -116,7 +120,7 @@ public class WeatherControlParasolItem extends Item implements KamikotizedPowerS
                     }
                 } else if (hitResult instanceof EntityHitResult entityHitResult) {
                     Entity target = entityHitResult.getEntity();
-                    ((MiraculousRecoveryDataHolder) overworld).mineraculous$getMiraculousRecoveryEntityData().putRecoverable(player.getUUID(), target);
+                    ((MiraculousRecoveryDataHolder) overworld).mineraculous$getMiraculousRecoveryEntityData().putRecoverable(owner.getUUID(), target);
                     target.setTicksFrozen(Integer.MAX_VALUE);
                     target.moveTo(target.blockPosition().getBottomCenter());
                     target.setDeltaMovement(0, 0, 0);
@@ -136,12 +140,13 @@ public class WeatherControlParasolItem extends Item implements KamikotizedPowerS
                         }
                     }
                 }
-                ((MiraculousRecoveryDataHolder) overworld).mineraculous$getMiraculousRecoveryBlockData().putRecoverable(player.getUUID(), alteredBlocks);
+                ((MiraculousRecoveryDataHolder) overworld).mineraculous$getMiraculousRecoveryBlockData().putRecoverable(owner.getUUID(), alteredBlocks);
             }
         } else {
             if (ability == Ability.LIGHTNING) {
                 if (overworld != null) {
                     HitResult hitresult = ProjectileUtil.getHitResultOnViewVector(player, entity -> entity.isAlive() && entity.isPickable(), 100);
+                    Player finalOwner = owner;
                     LightningBolt lightningBolt = new LightningBolt(EntityType.LIGHTNING_BOLT, level) {
                         @Override
                         public void tick() {
@@ -152,7 +157,7 @@ public class WeatherControlParasolItem extends Item implements KamikotizedPowerS
                                                 new AABB(this.getX() - 3.0, this.getY() - 3.0, this.getZ() - 3.0, this.getX() + 3.0, this.getY() + 6.0 + 3.0, this.getZ() + 3.0),
                                                 Entity::isAlive);
                                 for (Entity entity : hit)
-                                    ((MiraculousRecoveryDataHolder) overworld).mineraculous$getMiraculousRecoveryEntityData().putRecoverable(player.getUUID(), entity);
+                                    ((MiraculousRecoveryDataHolder) overworld).mineraculous$getMiraculousRecoveryEntityData().putRecoverable(finalOwner.getUUID(), entity);
                             }
                             super.tick();
                         }
@@ -180,7 +185,7 @@ public class WeatherControlParasolItem extends Item implements KamikotizedPowerS
                                         alteredBlocks.put(blockpos1, oldState1);
                                     }
                                 }
-                                ((MiraculousRecoveryDataHolder) overworld).mineraculous$getMiraculousRecoveryBlockData().putRecoverable(player.getUUID(), alteredBlocks);
+                                ((MiraculousRecoveryDataHolder) overworld).mineraculous$getMiraculousRecoveryBlockData().putRecoverable(finalOwner.getUUID(), alteredBlocks);
                             }
                         }
                     };
@@ -199,11 +204,12 @@ public class WeatherControlParasolItem extends Item implements KamikotizedPowerS
                 }
             } else if (ability == Ability.WIND) {
                 if (!level.isClientSide()) {
+                    Player finalOwner = owner;
                     WindCharge windcharge = new WindCharge(player, level, player.position().x(), player.getEyePosition().y(), player.position().z()) {
                         @Override
                         protected void onHitEntity(EntityHitResult result) {
                             if (overworld != null)
-                                ((MiraculousRecoveryDataHolder) overworld).mineraculous$getMiraculousRecoveryEntityData().putRecoverable(player.getUUID(), result.getEntity());
+                                ((MiraculousRecoveryDataHolder) overworld).mineraculous$getMiraculousRecoveryEntityData().putRecoverable(finalOwner.getUUID(), result.getEntity());
                             super.onHitEntity(result);
                         }
                     };
