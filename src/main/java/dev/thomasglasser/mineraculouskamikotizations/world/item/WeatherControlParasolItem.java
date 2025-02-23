@@ -189,7 +189,10 @@ public class WeatherControlParasolItem extends Item implements KamikotizedPowerS
                             }
                         }
                     };
-                    lightningBolt.setPos(level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, BlockPos.containing(hitresult.getLocation())).getBottomCenter());
+                    if (hitresult instanceof EntityHitResult entityHitResult) {
+                        lightningBolt.setPos(entityHitResult.getEntity().position());
+                    } else
+                        lightningBolt.setPos(level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, BlockPos.containing(hitresult.getLocation())).getBottomCenter());
                     level.addFreshEntity(lightningBolt);
                 }
             } else if (ability == Ability.WEATHER) {

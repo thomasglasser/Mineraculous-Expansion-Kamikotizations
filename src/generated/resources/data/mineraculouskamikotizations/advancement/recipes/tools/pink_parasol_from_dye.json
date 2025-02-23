@@ -5,6 +5,16 @@
       "conditions": {
         "items": [
           {
+            "items": "#mineraculouskamikotizations:parasols"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_self": {
+      "conditions": {
+        "items": [
+          {
             "items": "mineraculouskamikotizations:pink_parasol"
           }
         ]
@@ -21,7 +31,8 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_parasol"
+      "has_parasol",
+      "has_self"
     ]
   ],
   "rewards": {
