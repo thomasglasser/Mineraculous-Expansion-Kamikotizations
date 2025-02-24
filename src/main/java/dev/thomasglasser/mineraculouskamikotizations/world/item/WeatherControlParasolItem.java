@@ -41,7 +41,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.entity.projectile.windcharge.WindCharge;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ResolvableProfile;
 import net.minecraft.world.level.GameRules;
@@ -55,7 +54,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 
-public class WeatherControlParasolItem extends Item implements KamikotizedPowerSourceItem {
+public class WeatherControlParasolItem extends ParasolItem implements KamikotizedPowerSourceItem {
     public static final ResourceLocation ABILITY_PROPERTY_ID = MineraculousKamikotizations.modLoc("ability");
 
     public WeatherControlParasolItem(Properties properties) {
@@ -64,6 +63,7 @@ public class WeatherControlParasolItem extends Item implements KamikotizedPowerS
 
     @Override
     public void inventoryTick(ItemStack stack, Level level, Entity entity, int slotId, boolean isSelected) {
+        super.inventoryTick(stack, level, entity, slotId, isSelected);
         if (entity instanceof Player player && !player.isUsingItem()) {
             if (level.isClientSide() && (player.getMainHandItem() == stack || player.getOffhandItem() == stack)) {
                 InteractionHand hand = player.getMainHandItem() == stack ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND;

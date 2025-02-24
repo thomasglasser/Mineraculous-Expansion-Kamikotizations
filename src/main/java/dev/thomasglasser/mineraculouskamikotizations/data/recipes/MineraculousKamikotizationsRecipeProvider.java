@@ -2,19 +2,24 @@ package dev.thomasglasser.mineraculouskamikotizations.data.recipes;
 
 import dev.thomasglasser.mineraculouskamikotizations.tags.MineraculousKamikotizationsItemTags;
 import dev.thomasglasser.mineraculouskamikotizations.world.item.MineraculousKamikotizationsItems;
+import dev.thomasglasser.mineraculouskamikotizations.world.item.ParasolItem;
 import dev.thomasglasser.tommylib.api.data.recipes.ExtendedRecipeProvider;
+import dev.thomasglasser.tommylib.api.registration.DeferredItem;
 import dev.thomasglasser.tommylib.api.tags.ConventionalItemTags;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 
 public class MineraculousKamikotizationsRecipeProvider extends ExtendedRecipeProvider {
@@ -24,39 +29,10 @@ public class MineraculousKamikotizationsRecipeProvider extends ExtendedRecipePro
 
     @Override
     protected void buildRecipes(RecipeOutput recipeOutput, HolderLookup.Provider registries) {
-        parasolFromCarpet(recipeOutput, MineraculousKamikotizationsItems.WHITE_PARASOL.get(), Items.WHITE_CARPET);
-        parasolFromCarpet(recipeOutput, MineraculousKamikotizationsItems.ORANGE_PARASOL.get(), Items.ORANGE_CARPET);
-        parasolFromCarpet(recipeOutput, MineraculousKamikotizationsItems.MAGENTA_PARASOL.get(), Items.MAGENTA_CARPET);
-        parasolFromCarpet(recipeOutput, MineraculousKamikotizationsItems.LIGHT_BLUE_PARASOL.get(), Items.LIGHT_BLUE_CARPET);
-        parasolFromCarpet(recipeOutput, MineraculousKamikotizationsItems.YELLOW_PARASOL.get(), Items.YELLOW_CARPET);
-        parasolFromCarpet(recipeOutput, MineraculousKamikotizationsItems.LIME_PARASOL.get(), Items.LIME_CARPET);
-        parasolFromCarpet(recipeOutput, MineraculousKamikotizationsItems.PINK_PARASOL.get(), Items.PINK_CARPET);
-        parasolFromCarpet(recipeOutput, MineraculousKamikotizationsItems.GRAY_PARASOL.get(), Items.GRAY_CARPET);
-        parasolFromCarpet(recipeOutput, MineraculousKamikotizationsItems.LIGHT_GRAY_PARASOL.get(), Items.LIGHT_GRAY_CARPET);
-        parasolFromCarpet(recipeOutput, MineraculousKamikotizationsItems.CYAN_PARASOL.get(), Items.CYAN_CARPET);
-        parasolFromCarpet(recipeOutput, MineraculousKamikotizationsItems.PURPLE_PARASOL.get(), Items.PURPLE_CARPET);
-        parasolFromCarpet(recipeOutput, MineraculousKamikotizationsItems.BLUE_PARASOL.get(), Items.BLUE_CARPET);
-        parasolFromCarpet(recipeOutput, MineraculousKamikotizationsItems.BROWN_PARASOL.get(), Items.BROWN_CARPET);
-        parasolFromCarpet(recipeOutput, MineraculousKamikotizationsItems.GREEN_PARASOL.get(), Items.GREEN_CARPET);
-        parasolFromCarpet(recipeOutput, MineraculousKamikotizationsItems.RED_PARASOL.get(), Items.RED_CARPET);
-        parasolFromCarpet(recipeOutput, MineraculousKamikotizationsItems.BLACK_PARASOL.get(), Items.BLACK_CARPET);
-
-        parasolFromDye(recipeOutput, MineraculousKamikotizationsItems.WHITE_PARASOL.get(), ConventionalItemTags.WHITE_DYES);
-        parasolFromDye(recipeOutput, MineraculousKamikotizationsItems.ORANGE_PARASOL.get(), ConventionalItemTags.ORANGE_DYES);
-        parasolFromDye(recipeOutput, MineraculousKamikotizationsItems.MAGENTA_PARASOL.get(), ConventionalItemTags.MAGENTA_DYES);
-        parasolFromDye(recipeOutput, MineraculousKamikotizationsItems.LIGHT_BLUE_PARASOL.get(), ConventionalItemTags.LIGHT_BLUE_DYES);
-        parasolFromDye(recipeOutput, MineraculousKamikotizationsItems.YELLOW_PARASOL.get(), ConventionalItemTags.YELLOW_DYES);
-        parasolFromDye(recipeOutput, MineraculousKamikotizationsItems.LIME_PARASOL.get(), ConventionalItemTags.LIME_DYES);
-        parasolFromDye(recipeOutput, MineraculousKamikotizationsItems.PINK_PARASOL.get(), ConventionalItemTags.PINK_DYES);
-        parasolFromDye(recipeOutput, MineraculousKamikotizationsItems.GRAY_PARASOL.get(), ConventionalItemTags.GRAY_DYES);
-        parasolFromDye(recipeOutput, MineraculousKamikotizationsItems.LIGHT_GRAY_PARASOL.get(), ConventionalItemTags.LIGHT_GRAY_DYES);
-        parasolFromDye(recipeOutput, MineraculousKamikotizationsItems.CYAN_PARASOL.get(), ConventionalItemTags.CYAN_DYES);
-        parasolFromDye(recipeOutput, MineraculousKamikotizationsItems.PURPLE_PARASOL.get(), ConventionalItemTags.PURPLE_DYES);
-        parasolFromDye(recipeOutput, MineraculousKamikotizationsItems.BLUE_PARASOL.get(), ConventionalItemTags.BLUE_DYES);
-        parasolFromDye(recipeOutput, MineraculousKamikotizationsItems.BROWN_PARASOL.get(), ConventionalItemTags.BROWN_DYES);
-        parasolFromDye(recipeOutput, MineraculousKamikotizationsItems.GREEN_PARASOL.get(), ConventionalItemTags.GREEN_DYES);
-        parasolFromDye(recipeOutput, MineraculousKamikotizationsItems.RED_PARASOL.get(), ConventionalItemTags.RED_DYES);
-        parasolFromDye(recipeOutput, MineraculousKamikotizationsItems.BLACK_PARASOL.get(), ConventionalItemTags.BLACK_DYES);
+        for (Map.Entry<DyeColor, DeferredItem<ParasolItem>> parasol : MineraculousKamikotizationsItems.PARASOLS.entrySet()) {
+            parasolFromCarpet(recipeOutput, parasol.getValue().get(), BuiltInRegistries.ITEM.get(ResourceLocation.withDefaultNamespace(parasol.getKey().getName() + "_carpet")));
+            parasolFromDye(recipeOutput, parasol.getValue().get(), ConventionalItemTags.forDyeColor(parasol.getKey()));
+        }
     }
 
     protected void parasolFromCarpet(RecipeOutput recipeOutput, ItemLike parasol, ItemLike carpet) {

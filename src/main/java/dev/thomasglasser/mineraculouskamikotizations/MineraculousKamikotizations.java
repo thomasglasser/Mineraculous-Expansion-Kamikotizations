@@ -1,6 +1,7 @@
 package dev.thomasglasser.mineraculouskamikotizations;
 
 import dev.thomasglasser.mineraculouskamikotizations.client.MineraculousKamikotizationsClientEvents;
+import dev.thomasglasser.mineraculouskamikotizations.client.MineraculousKamikotizationsKeyMappings;
 import dev.thomasglasser.mineraculouskamikotizations.core.component.MineraculousKamikotizationsDataComponents;
 import dev.thomasglasser.mineraculouskamikotizations.data.MineraculousKamikotizationsDataGenerators;
 import dev.thomasglasser.mineraculouskamikotizations.network.MineraculousKamikotizationsPayloads;
@@ -33,6 +34,8 @@ public class MineraculousKamikotizations {
         bus.addListener(MineraculousKamikotizationsPayloads::onRegisterPackets);
 
         if (TommyLibServices.PLATFORM.isClientSide()) {
+            MineraculousKamikotizationsKeyMappings.init();
+
             bus.addListener(MineraculousKamikotizationsClientEvents::onFMLClientSetup);
             bus.addListener(MineraculousKamikotizationsClientEvents::onBuildCreativeModeTabContents);
         }

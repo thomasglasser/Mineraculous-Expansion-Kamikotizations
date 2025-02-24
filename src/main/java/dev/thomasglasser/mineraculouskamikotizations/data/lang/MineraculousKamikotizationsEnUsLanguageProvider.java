@@ -2,11 +2,16 @@ package dev.thomasglasser.mineraculouskamikotizations.data.lang;
 
 import dev.thomasglasser.mineraculous.data.lang.MineraculousEnUsLanguageProvider;
 import dev.thomasglasser.mineraculouskamikotizations.MineraculousKamikotizations;
+import dev.thomasglasser.mineraculouskamikotizations.client.MineraculousKamikotizationsKeyMappings;
 import dev.thomasglasser.mineraculouskamikotizations.world.entity.kamikotization.MineraculousKamikotizationsKamikotizations;
 import dev.thomasglasser.mineraculouskamikotizations.world.item.MineraculousKamikotizationsCreativeModeTabs;
 import dev.thomasglasser.mineraculouskamikotizations.world.item.MineraculousKamikotizationsItems;
+import dev.thomasglasser.mineraculouskamikotizations.world.item.ParasolItem;
 import dev.thomasglasser.mineraculouskamikotizations.world.item.WeatherControlParasolItem;
+import dev.thomasglasser.tommylib.api.registration.DeferredItem;
+import java.util.Map;
 import net.minecraft.data.PackOutput;
+import net.minecraft.world.item.DyeColor;
 
 public class MineraculousKamikotizationsEnUsLanguageProvider extends MineraculousEnUsLanguageProvider {
     public MineraculousKamikotizationsEnUsLanguageProvider(PackOutput output) {
@@ -15,22 +20,9 @@ public class MineraculousKamikotizationsEnUsLanguageProvider extends Mineraculou
 
     @Override
     protected void addTranslations() {
-        add(MineraculousKamikotizationsItems.WHITE_PARASOL.get(), "White Parasol");
-        add(MineraculousKamikotizationsItems.ORANGE_PARASOL.get(), "Orange Parasol");
-        add(MineraculousKamikotizationsItems.MAGENTA_PARASOL.get(), "Magenta Parasol");
-        add(MineraculousKamikotizationsItems.LIGHT_BLUE_PARASOL.get(), "Light Blue Parasol");
-        add(MineraculousKamikotizationsItems.YELLOW_PARASOL.get(), "Yellow Parasol");
-        add(MineraculousKamikotizationsItems.LIME_PARASOL.get(), "Lime Parasol");
-        add(MineraculousKamikotizationsItems.PINK_PARASOL.get(), "Pink Parasol");
-        add(MineraculousKamikotizationsItems.GRAY_PARASOL.get(), "Gray Parasol");
-        add(MineraculousKamikotizationsItems.LIGHT_GRAY_PARASOL.get(), "Light Gray Parasol");
-        add(MineraculousKamikotizationsItems.CYAN_PARASOL.get(), "Cyan Parasol");
-        add(MineraculousKamikotizationsItems.PURPLE_PARASOL.get(), "Purple Parasol");
-        add(MineraculousKamikotizationsItems.BLUE_PARASOL.get(), "Blue Parasol");
-        add(MineraculousKamikotizationsItems.BROWN_PARASOL.get(), "Brown Parasol");
-        add(MineraculousKamikotizationsItems.GREEN_PARASOL.get(), "Green Parasol");
-        add(MineraculousKamikotizationsItems.RED_PARASOL.get(), "Red Parasol");
-        add(MineraculousKamikotizationsItems.BLACK_PARASOL.get(), "Black Parasol");
+        for (Map.Entry<DyeColor, DeferredItem<ParasolItem>> parasol : MineraculousKamikotizationsItems.PARASOLS.entrySet()) {
+            add(parasol.getValue().get(), capitalize(parasol.getKey().getName()) + " Parasol");
+        }
         add(MineraculousKamikotizationsItems.WEATHER_CONTROL_PARASOL.get(), "Weather Control Parasol");
 
         add(WeatherControlParasolItem.Ability.ICE, "Ice");
@@ -41,5 +33,7 @@ public class MineraculousKamikotizationsEnUsLanguageProvider extends Mineraculou
         add(MineraculousKamikotizationsKamikotizations.WEATHER_CONTROL, "Weather Control");
 
         add(MineraculousKamikotizationsCreativeModeTabs.MINERACULOUS_KAMIKOTIZATIONS.get(), "Mineraculous Expansion: Kamikotizations");
+
+        add(MineraculousKamikotizationsKeyMappings.OPEN_PARASOL.get(), "Open Parasol");
     }
 }
