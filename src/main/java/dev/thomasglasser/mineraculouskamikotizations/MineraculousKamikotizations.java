@@ -6,6 +6,7 @@ import dev.thomasglasser.mineraculouskamikotizations.core.component.Mineraculous
 import dev.thomasglasser.mineraculouskamikotizations.data.MineraculousKamikotizationsDataGenerators;
 import dev.thomasglasser.mineraculouskamikotizations.network.MineraculousKamikotizationsPayloads;
 import dev.thomasglasser.mineraculouskamikotizations.world.attachment.MineraculousKamikotizationsAttachmentTypes;
+import dev.thomasglasser.mineraculouskamikotizations.world.entity.MineraculousKamikotizationsEntityTypes;
 import dev.thomasglasser.mineraculouskamikotizations.world.item.MineraculousKamikotizationsCreativeModeTabs;
 import dev.thomasglasser.mineraculouskamikotizations.world.item.MineraculousKamikotizationsItems;
 import dev.thomasglasser.tommylib.api.platform.TommyLibServices;
@@ -28,6 +29,7 @@ public class MineraculousKamikotizations {
         MineraculousKamikotizationsItems.init();
         MineraculousKamikotizationsAttachmentTypes.init();
         MineraculousKamikotizationsCreativeModeTabs.init();
+        MineraculousKamikotizationsEntityTypes.init();
 
         bus.addListener(MineraculousKamikotizationsDataGenerators::onGatherData);
 
@@ -38,6 +40,7 @@ public class MineraculousKamikotizations {
 
             bus.addListener(MineraculousKamikotizationsClientEvents::onFMLClientSetup);
             bus.addListener(MineraculousKamikotizationsClientEvents::onBuildCreativeModeTabContents);
+            bus.addListener(MineraculousKamikotizationsClientEvents::onRegisterRenderer);
         }
     }
 

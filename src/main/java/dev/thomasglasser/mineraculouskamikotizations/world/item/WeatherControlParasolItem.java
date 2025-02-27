@@ -14,9 +14,9 @@ import dev.thomasglasser.mineraculouskamikotizations.MineraculousKamikotizations
 import dev.thomasglasser.mineraculouskamikotizations.core.component.MineraculousKamikotizationsDataComponents;
 import dev.thomasglasser.mineraculouskamikotizations.network.ServerboundSetWeatherControlParasolAbilityPayload;
 import dev.thomasglasser.mineraculouskamikotizations.world.attachment.MineraculousKamikotizationsAttachmentTypes;
+import dev.thomasglasser.mineraculouskamikotizations.world.entity.projectile.IceCharge;
 import dev.thomasglasser.tommylib.api.platform.TommyLibServices;
 import io.netty.buffer.ByteBuf;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -102,145 +102,134 @@ public class WeatherControlParasolItem extends ParasolItem implements Kamikotize
         ServerLevel overworld = level.getServer() != null ? level.getServer().overworld() : null;
         if (ability == Ability.ICE) {
             if (overworld != null) {
-                HitResult hitResult = ProjectileUtil.getHitResultOnViewVector(player, entity -> entity.isAlive() && entity.isPickable(), 100);
                 Map<BlockPos, BlockState> alteredBlocks = new HashMap<>();
-                if (hitResult instanceof BlockHitResult blockHitResult) {
-                    BlockPos pos = blockHitResult.getBlockPos();
-                    for (int i = -1; i <= 1; i++) {
-                        for (int k = -1; k <= 1; k++) {
-                            BlockPos blockpos = pos.offset(i, 0, k).above();
-                            if (level.canSeeSky(blockpos))
-                                blockpos = level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, pos.offset(i, 0, k));
-                            if (level.getBlockState(blockpos).canBeReplaced() && !level.getBlockState(blockpos.below()).is(Blocks.ICE)) {
-                                BlockState oldState = level.getBlockState(blockpos);
-                                alteredBlocks.put(blockpos, oldState);
-                                level.setBlockAndUpdate(blockpos, Blocks.ICE.defaultBlockState());
-                            }
-                        }
-                    }
-                } else if (hitResult instanceof EntityHitResult entityHitResult) {
-                    Entity target = entityHitResult.getEntity();
-                    ((MiraculousRecoveryDataHolder) overworld).mineraculous$getMiraculousRecoveryEntityData().putRecoverable(owner.getUUID(), target);
-                    target.setTicksFrozen(Integer.MAX_VALUE);
-                    target.moveTo(target.blockPosition().getBottomCenter());
-                    target.setDeltaMovement(0, 0, 0);
-                    List<BlockPos> inside = getInsidePos(target);
-                    int blocksWide = Mth.ceil(target.getBbWidth());
-                    int blocksHigh = Mth.ceil(target.getBbHeight());
-                    for (int i = -blocksWide; i <= blocksWide; i++) {
-                        for (int j = -1; j <= blocksHigh; j++) {
-                            for (int k = -blocksWide; k <= blocksWide; k++) {
-                                BlockPos blockpos = target.blockPosition().offset(i, j, k);
-                                BlockState oldState = level.getBlockState(blockpos);
-                                if (!inside.contains(blockpos) && oldState.canBeReplaced()) {
-                                    alteredBlocks.put(blockpos, oldState);
-                                    level.setBlockAndUpdate(blockpos, Blocks.ICE.defaultBlockState());
-                                }
-                            }
-                        }
-                    }
-                }
-                ((MiraculousRecoveryDataHolder) overworld).mineraculous$getMiraculousRecoveryBlockData().putRecoverable(owner.getUUID(), alteredBlocks);
-            }
-        } else {
-            if (ability == Ability.LIGHTNING) {
-                if (overworld != null) {
-                    HitResult hitresult = ProjectileUtil.getHitResultOnViewVector(player, entity -> entity.isAlive() && entity.isPickable(), 100);
-                    Player finalOwner = owner;
-                    LightningBolt lightningBolt = new LightningBolt(EntityType.LIGHTNING_BOLT, level) {
-                        @Override
-                        public void tick() {
-                            if (!visualOnly) {
-                                List<Entity> hit = this.level()
-                                        .getEntities(
-                                                this,
-                                                new AABB(this.getX() - 3.0, this.getY() - 3.0, this.getZ() - 3.0, this.getX() + 3.0, this.getY() + 6.0 + 3.0, this.getZ() + 3.0),
-                                                Entity::isAlive);
-                                for (Entity entity : hit)
-                                    ((MiraculousRecoveryDataHolder) overworld).mineraculous$getMiraculousRecoveryEntityData().putRecoverable(finalOwner.getUUID(), entity);
-                            }
-                            super.tick();
-                        }
-
-                        @Override
-                        protected void spawnFire(int extraIgnitions) {
-                            if (!this.visualOnly && !this.level().isClientSide && this.level().getGameRules().getBoolean(GameRules.RULE_DOFIRETICK)) {
-                                Map<BlockPos, BlockState> alteredBlocks = new HashMap<>();
-                                BlockPos blockpos = this.blockPosition();
-                                BlockState oldState = this.level().getBlockState(blockpos);
-                                BlockState blockstate = BaseFireBlock.getState(this.level(), blockpos);
-                                if (oldState.isAir() && blockstate.canSurvive(this.level(), blockpos)) {
-                                    this.level().setBlockAndUpdate(blockpos, blockstate);
-                                    this.blocksSetOnFire++;
-                                    alteredBlocks.put(blockpos, oldState);
-                                }
-
-                                for (int i = 0; i < extraIgnitions; i++) {
-                                    BlockPos blockpos1 = blockpos.offset(this.random.nextInt(3) - 1, this.random.nextInt(3) - 1, this.random.nextInt(3) - 1);
-                                    BlockState oldState1 = this.level().getBlockState(blockpos1);
-                                    blockstate = BaseFireBlock.getState(this.level(), blockpos1);
-                                    if (oldState1.isAir() && blockstate.canSurvive(this.level(), blockpos1)) {
-                                        this.level().setBlockAndUpdate(blockpos1, blockstate);
-                                        this.blocksSetOnFire++;
-                                        alteredBlocks.put(blockpos1, oldState1);
+                Player finalOwner = owner;
+                IceCharge iceCharge = new IceCharge(level, player, player.position().x(), player.getEyePosition().y(), player.position().z()) {
+                    @Override
+                    protected void onHitEntity(EntityHitResult result) {
+                        Entity entity = result.getEntity();
+                        ((MiraculousRecoveryDataHolder) overworld).mineraculous$getMiraculousRecoveryEntityData().putRecoverable(finalOwner.getUUID(), entity);
+                        List<BlockPos> inside = getInsidePos(entity);
+                        int blocksWide = Mth.ceil(entity.getBbWidth());
+                        int blocksHigh = Mth.ceil(entity.getBbHeight());
+                        for (int i = -blocksWide; i <= blocksWide; i++) {
+                            for (int j = -1; j <= blocksHigh; j++) {
+                                for (int k = -blocksWide; k <= blocksWide; k++) {
+                                    BlockPos blockpos = entity.blockPosition().offset(i, j, k);
+                                    BlockState oldState = level().getBlockState(blockpos);
+                                    if (!inside.contains(blockpos) && oldState.canBeReplaced()) {
+                                        alteredBlocks.put(blockpos, level().getBlockState(blockpos));
                                     }
                                 }
-                                ((MiraculousRecoveryDataHolder) overworld).mineraculous$getMiraculousRecoveryBlockData().putRecoverable(finalOwner.getUUID(), alteredBlocks);
                             }
                         }
-                    };
-                    if (hitresult instanceof EntityHitResult entityHitResult) {
-                        lightningBolt.setPos(entityHitResult.getEntity().position());
-                    } else
-                        lightningBolt.setPos(level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, BlockPos.containing(hitresult.getLocation())).getBottomCenter());
-                    level.addFreshEntity(lightningBolt);
-                }
-            } else if (ability == Ability.WEATHER) {
-                if (overworld != null) {
-                    if (overworld.isThundering())
-                        overworld.setWeatherParameters(ServerLevel.RAIN_DELAY.sample(overworld.random), 0, false, false);
-                    else if (overworld.isRaining())
-                        overworld.setWeatherParameters(0, ServerLevel.THUNDER_DURATION.sample(overworld.random), true, true);
-                    else
-                        overworld.setWeatherParameters(0, ServerLevel.RAIN_DURATION.sample(overworld.random), true, false);
-                    overworld.setData(MineraculousKamikotizationsAttachmentTypes.WEATHER_MODIFIED, true);
-                }
-            } else if (ability == Ability.WIND) {
-                if (!level.isClientSide()) {
-                    Player finalOwner = owner;
-                    WindCharge windcharge = new WindCharge(player, level, player.position().x(), player.getEyePosition().y(), player.position().z()) {
-                        @Override
-                        protected void onHitEntity(EntityHitResult result) {
-                            if (overworld != null)
-                                ((MiraculousRecoveryDataHolder) overworld).mineraculous$getMiraculousRecoveryEntityData().putRecoverable(finalOwner.getUUID(), result.getEntity());
-                            super.onHitEntity(result);
-                        }
-                    };
-                    windcharge.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 1.5F, 1.0F);
-                    level.addFreshEntity(windcharge);
-                }
+                        super.onHitEntity(result);
+                    }
 
-                level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.WIND_CHARGE_THROW, SoundSource.NEUTRAL, 0.5F, 0.4F / (level.getRandom().nextFloat() * 0.4F + 0.8F));
+                    @Override
+                    protected void onHitBlock(BlockHitResult result) {
+                        BlockPos pos = result.getBlockPos();
+                        for (int i = -1; i <= 1; i++) {
+                            for (int k = -1; k <= 1; k++) {
+                                BlockPos blockpos = pos.offset(i, 0, k).above();
+                                if (level().canSeeSky(blockpos))
+                                    blockpos = level().getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, pos.offset(i, 0, k));
+                                if (level().getBlockState(blockpos).canBeReplaced() && !level().getBlockState(blockpos.below()).is(Blocks.ICE)) {
+                                    alteredBlocks.put(blockpos, level().getBlockState(blockpos));
+                                }
+                            }
+                        }
+                        super.onHitBlock(result);
+                    }
+                };
+                iceCharge.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 1.5F, 1.0F);
+                level.addFreshEntity(iceCharge);
+                ((MiraculousRecoveryDataHolder) overworld).mineraculous$getMiraculousRecoveryBlockData().putRecoverable(owner.getUUID(), alteredBlocks);
             }
-            player.getCooldowns().addCooldown(this, 10);
+
+            level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.WIND_CHARGE_THROW, SoundSource.NEUTRAL, 0.5F, 0.4F / (level.getRandom().nextFloat() * 0.4F + 0.8F));
+        } else if (ability == Ability.LIGHTNING) {
+            if (overworld != null) {
+                HitResult hitresult = ProjectileUtil.getHitResultOnViewVector(player, entity -> entity.isAlive() && entity.isPickable(), 100);
+                Player finalOwner = owner;
+                LightningBolt lightningBolt = new LightningBolt(EntityType.LIGHTNING_BOLT, level) {
+                    @Override
+                    public void tick() {
+                        if (!visualOnly) {
+                            List<Entity> hit = this.level()
+                                    .getEntities(
+                                            this,
+                                            new AABB(this.getX() - 3.0, this.getY() - 3.0, this.getZ() - 3.0, this.getX() + 3.0, this.getY() + 6.0 + 3.0, this.getZ() + 3.0),
+                                            Entity::isAlive);
+                            for (Entity entity : hit)
+                                ((MiraculousRecoveryDataHolder) overworld).mineraculous$getMiraculousRecoveryEntityData().putRecoverable(finalOwner.getUUID(), entity);
+                        }
+                        super.tick();
+                    }
+
+                    @Override
+                    protected void spawnFire(int extraIgnitions) {
+                        if (!this.visualOnly && !this.level().isClientSide && this.level().getGameRules().getBoolean(GameRules.RULE_DOFIRETICK)) {
+                            Map<BlockPos, BlockState> alteredBlocks = new HashMap<>();
+                            BlockPos blockpos = this.blockPosition();
+                            BlockState oldState = this.level().getBlockState(blockpos);
+                            BlockState blockstate = BaseFireBlock.getState(this.level(), blockpos);
+                            if (oldState.isAir() && blockstate.canSurvive(this.level(), blockpos)) {
+                                this.level().setBlockAndUpdate(blockpos, blockstate);
+                                this.blocksSetOnFire++;
+                                alteredBlocks.put(blockpos, oldState);
+                            }
+
+                            for (int i = 0; i < extraIgnitions; i++) {
+                                BlockPos blockpos1 = blockpos.offset(this.random.nextInt(3) - 1, this.random.nextInt(3) - 1, this.random.nextInt(3) - 1);
+                                BlockState oldState1 = this.level().getBlockState(blockpos1);
+                                blockstate = BaseFireBlock.getState(this.level(), blockpos1);
+                                if (oldState1.isAir() && blockstate.canSurvive(this.level(), blockpos1)) {
+                                    this.level().setBlockAndUpdate(blockpos1, blockstate);
+                                    this.blocksSetOnFire++;
+                                    alteredBlocks.put(blockpos1, oldState1);
+                                }
+                            }
+                            ((MiraculousRecoveryDataHolder) overworld).mineraculous$getMiraculousRecoveryBlockData().putRecoverable(finalOwner.getUUID(), alteredBlocks);
+                        }
+                    }
+                };
+                if (hitresult instanceof EntityHitResult entityHitResult) {
+                    lightningBolt.setPos(entityHitResult.getEntity().position());
+                } else
+                    lightningBolt.setPos(level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, BlockPos.containing(hitresult.getLocation())).getBottomCenter());
+                level.addFreshEntity(lightningBolt);
+            }
+        } else if (ability == Ability.WEATHER) {
+            if (overworld != null) {
+                if (overworld.isThundering())
+                    overworld.setWeatherParameters(ServerLevel.RAIN_DELAY.sample(overworld.random), 0, false, false);
+                else if (overworld.isRaining())
+                    overworld.setWeatherParameters(0, ServerLevel.THUNDER_DURATION.sample(overworld.random), true, true);
+                else
+                    overworld.setWeatherParameters(0, ServerLevel.RAIN_DURATION.sample(overworld.random), true, false);
+                overworld.setData(MineraculousKamikotizationsAttachmentTypes.WEATHER_MODIFIED, true);
+            }
+        } else if (ability == Ability.WIND) {
+            if (!level.isClientSide()) {
+                Player finalOwner = owner;
+                WindCharge windcharge = new WindCharge(player, level, player.position().x(), player.getEyePosition().y(), player.position().z()) {
+                    @Override
+                    protected void onHitEntity(EntityHitResult result) {
+                        if (overworld != null)
+                            ((MiraculousRecoveryDataHolder) overworld).mineraculous$getMiraculousRecoveryEntityData().putRecoverable(finalOwner.getUUID(), result.getEntity());
+                        super.onHitEntity(result);
+                    }
+                };
+                windcharge.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 1.5F, 1.0F);
+                level.addFreshEntity(windcharge);
+            }
+
+            level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.WIND_CHARGE_THROW, SoundSource.NEUTRAL, 0.5F, 0.4F / (level.getRandom().nextFloat() * 0.4F + 0.8F));
         }
+        player.getCooldowns().addCooldown(this, 10);
         player.awardStat(Stats.ITEM_USED.get(this));
         return InteractionResultHolder.sidedSuccess(itemStack, level.isClientSide());
-    }
-
-    private static List<BlockPos> getInsidePos(Entity target) {
-        AABB aabb = target.getBoundingBox();
-        BlockPos startPos = BlockPos.containing(aabb.minX + 1.0E-7, aabb.minY + 1.0E-7, aabb.minZ + 1.0E-7);
-        BlockPos endPos = BlockPos.containing(aabb.maxX - 1.0E-7, aabb.maxY - 1.0E-7, aabb.maxZ - 1.0E-7);
-        List<BlockPos> inside = new ArrayList<>();
-        for (int i = startPos.getX(); i <= endPos.getX(); i++) {
-            for (int j = startPos.getY(); j <= endPos.getY(); j++) {
-                for (int k = startPos.getZ(); k <= endPos.getZ(); k++) {
-                    inside.add(new BlockPos(i, j, k));
-                }
-            }
-        }
-        return inside;
     }
 
     @Override

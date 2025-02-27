@@ -5,6 +5,9 @@
   "minecraft:data_component_type": [
     "mineraculouskamikotizations:weather_control_parasol_ability"
   ],
+  "minecraft:entity_type": [
+    "mineraculouskamikotizations:ice_charge"
+  ],
   "minecraft:item": [
     "mineraculouskamikotizations:black_parasol",
     "mineraculouskamikotizations:blue_parasol",

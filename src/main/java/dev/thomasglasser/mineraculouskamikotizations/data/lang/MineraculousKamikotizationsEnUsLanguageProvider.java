@@ -3,6 +3,7 @@ package dev.thomasglasser.mineraculouskamikotizations.data.lang;
 import dev.thomasglasser.mineraculous.data.lang.MineraculousEnUsLanguageProvider;
 import dev.thomasglasser.mineraculouskamikotizations.MineraculousKamikotizations;
 import dev.thomasglasser.mineraculouskamikotizations.client.MineraculousKamikotizationsKeyMappings;
+import dev.thomasglasser.mineraculouskamikotizations.world.entity.MineraculousKamikotizationsEntityTypes;
 import dev.thomasglasser.mineraculouskamikotizations.world.entity.kamikotization.MineraculousKamikotizationsKamikotizations;
 import dev.thomasglasser.mineraculouskamikotizations.world.item.MineraculousKamikotizationsCreativeModeTabs;
 import dev.thomasglasser.mineraculouskamikotizations.world.item.MineraculousKamikotizationsItems;
@@ -35,5 +36,7 @@ public class MineraculousKamikotizationsEnUsLanguageProvider extends Mineraculou
         add(MineraculousKamikotizationsCreativeModeTabs.MINERACULOUS_KAMIKOTIZATIONS.get(), "Mineraculous Expansion: Kamikotizations");
 
         add(MineraculousKamikotizationsKeyMappings.OPEN_PARASOL.get(), "Open Parasol");
+
+        add(MineraculousKamikotizationsEntityTypes.ICE_CHARGE.get(), "Ice Charge");
     }
 }
