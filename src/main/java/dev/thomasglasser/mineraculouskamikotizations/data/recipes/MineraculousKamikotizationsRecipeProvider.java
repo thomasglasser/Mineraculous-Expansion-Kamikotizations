@@ -29,9 +29,11 @@ public class MineraculousKamikotizationsRecipeProvider extends ExtendedRecipePro
 
     @Override
     protected void buildRecipes(RecipeOutput recipeOutput, HolderLookup.Provider registries) {
-        for (Map.Entry<DyeColor, DeferredItem<ParasolItem>> parasol : MineraculousKamikotizationsItems.PARASOLS.entrySet()) {
-            parasolFromCarpet(recipeOutput, parasol.getValue().get(), BuiltInRegistries.ITEM.get(ResourceLocation.withDefaultNamespace(parasol.getKey().getName() + "_carpet")));
-            parasolFromDye(recipeOutput, parasol.getValue().get(), ConventionalItemTags.forDyeColor(parasol.getKey()));
+        for (DyeColor color : DyeColor.values()) {
+            TagKey<Item> dyeTag = ConventionalItemTags.forDyeColor(color);
+
+            parasolFromCarpet(recipeOutput, MineraculousKamikotizationsItems.PARASOLS.get(color).get(), BuiltInRegistries.ITEM.get(ResourceLocation.withDefaultNamespace(color.getName() + "_carpet")));
+            itemFromDye(recipeOutput, MineraculousKamikotizationsItems.PARASOLS.get(color).get(), MineraculousKamikotizationsItemTags.PARASOLS, dyeTag);
         }
     }
 
@@ -48,12 +50,12 @@ public class MineraculousKamikotizationsRecipeProvider extends ExtendedRecipePro
                 .save(recipeOutput);
     }
 
-    protected void parasolFromDye(RecipeOutput recipeOutput, ItemLike parasol, TagKey<Item> dyeTag) {
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, parasol)
-                .requires(MineraculousKamikotizationsItemTags.PARASOLS)
+    protected void itemFromDye(RecipeOutput recipeOutput, ItemLike result, TagKey<Item> itemTag, TagKey<Item> dyeTag) {
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, result)
+                .requires(itemTag)
                 .requires(dyeTag)
-                .unlockedBy("has_parasol", has(MineraculousKamikotizationsItemTags.PARASOLS))
-                .unlockedBy("has_self", has(parasol))
-                .save(recipeOutput, RecipeBuilder.getDefaultRecipeId(parasol).withPath(path -> path + "_from_dye"));
+                .unlockedBy("has_item", has(itemTag))
+                .unlockedBy("has_self", has(result))
+                .save(recipeOutput, RecipeBuilder.getDefaultRecipeId(result).withPath(path -> path + "_from_dye"));
     }
 }

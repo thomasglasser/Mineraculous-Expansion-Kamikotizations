@@ -21,9 +21,10 @@ public class MineraculousKamikotizationsEnUsLanguageProvider extends Mineraculou
 
     @Override
     protected void addTranslations() {
-        for (Map.Entry<DyeColor, DeferredItem<ParasolItem>> parasol : MineraculousKamikotizationsItems.PARASOLS.entrySet()) {
-            add(parasol.getValue().get(), capitalize(parasol.getKey().getName()) + " Parasol");
+        for (DyeColor color : DyeColor.values()) {
+            add(MineraculousKamikotizationsItems.PARASOLS.get(color).get(), capitalize(color.getName()) + " Parasol");
         }
+
         add(MineraculousKamikotizationsItems.WEATHER_CONTROL_PARASOL.get(), "Weather Control Parasol");
 
         add(WeatherControlParasolItem.Ability.ICE, "Ice");

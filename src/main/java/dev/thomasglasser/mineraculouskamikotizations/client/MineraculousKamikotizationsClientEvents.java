@@ -30,10 +30,23 @@ public class MineraculousKamikotizationsClientEvents {
         } else if (event.getTabKey() == CreativeModeTabs.REDSTONE_BLOCKS) {
 
         } else if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
+            // Parasols
             event.insertAfter(Items.NETHERITE_HOE.getDefaultInstance(), MineraculousKamikotizationsItems.PARASOLS.get(DyeColor.WHITE).toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-            for (int i = 1; i < MineraculousKamikotizationsItems.PARASOLS.size(); i++) {
-                event.insertAfter(MineraculousKamikotizationsItems.PARASOLS.get(DyeColor.values()[i - 1]).toStack(), MineraculousKamikotizationsItems.PARASOLS.get(DyeColor.values()[i]).toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-            }
+            event.insertAfter(MineraculousKamikotizationsItems.PARASOLS.get(DyeColor.WHITE).toStack(), MineraculousKamikotizationsItems.PARASOLS.get(DyeColor.LIGHT_GRAY).toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+            event.insertAfter(MineraculousKamikotizationsItems.PARASOLS.get(DyeColor.LIGHT_GRAY).toStack(), MineraculousKamikotizationsItems.PARASOLS.get(DyeColor.GRAY).toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+            event.insertAfter(MineraculousKamikotizationsItems.PARASOLS.get(DyeColor.GRAY).toStack(), MineraculousKamikotizationsItems.PARASOLS.get(DyeColor.BLACK).toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+            event.insertAfter(MineraculousKamikotizationsItems.PARASOLS.get(DyeColor.BLACK).toStack(), MineraculousKamikotizationsItems.PARASOLS.get(DyeColor.BROWN).toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+            event.insertAfter(MineraculousKamikotizationsItems.PARASOLS.get(DyeColor.BROWN).toStack(), MineraculousKamikotizationsItems.PARASOLS.get(DyeColor.RED).toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+            event.insertAfter(MineraculousKamikotizationsItems.PARASOLS.get(DyeColor.RED).toStack(), MineraculousKamikotizationsItems.PARASOLS.get(DyeColor.ORANGE).toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+            event.insertAfter(MineraculousKamikotizationsItems.PARASOLS.get(DyeColor.ORANGE).toStack(), MineraculousKamikotizationsItems.PARASOLS.get(DyeColor.YELLOW).toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+            event.insertAfter(MineraculousKamikotizationsItems.PARASOLS.get(DyeColor.YELLOW).toStack(), MineraculousKamikotizationsItems.PARASOLS.get(DyeColor.LIME).toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+            event.insertAfter(MineraculousKamikotizationsItems.PARASOLS.get(DyeColor.LIME).toStack(), MineraculousKamikotizationsItems.PARASOLS.get(DyeColor.GREEN).toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+            event.insertAfter(MineraculousKamikotizationsItems.PARASOLS.get(DyeColor.GREEN).toStack(), MineraculousKamikotizationsItems.PARASOLS.get(DyeColor.CYAN).toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+            event.insertAfter(MineraculousKamikotizationsItems.PARASOLS.get(DyeColor.CYAN).toStack(), MineraculousKamikotizationsItems.PARASOLS.get(DyeColor.LIGHT_BLUE).toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+            event.insertAfter(MineraculousKamikotizationsItems.PARASOLS.get(DyeColor.LIGHT_BLUE).toStack(), MineraculousKamikotizationsItems.PARASOLS.get(DyeColor.BLUE).toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+            event.insertAfter(MineraculousKamikotizationsItems.PARASOLS.get(DyeColor.BLUE).toStack(), MineraculousKamikotizationsItems.PARASOLS.get(DyeColor.PURPLE).toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+            event.insertAfter(MineraculousKamikotizationsItems.PARASOLS.get(DyeColor.PURPLE).toStack(), MineraculousKamikotizationsItems.PARASOLS.get(DyeColor.MAGENTA).toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+            event.insertAfter(MineraculousKamikotizationsItems.PARASOLS.get(DyeColor.MAGENTA).toStack(), MineraculousKamikotizationsItems.PARASOLS.get(DyeColor.PINK).toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
         } else if (event.getTabKey() == CreativeModeTabs.COMBAT) {
             event.insertAfter(MineraculousItems.BUTTERFLY_CANE.toStack(), MineraculousKamikotizationsItems.WEATHER_CONTROL_PARASOL.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
         } else if (event.getTabKey() == CreativeModeTabs.FOOD_AND_DRINKS) {
