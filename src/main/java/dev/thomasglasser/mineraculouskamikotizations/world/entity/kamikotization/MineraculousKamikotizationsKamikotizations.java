@@ -14,6 +14,7 @@ import net.minecraft.resources.ResourceKey;
 
 public class MineraculousKamikotizationsKamikotizations {
     public static final ResourceKey<Kamikotization> WEATHER_CONTROL = create("weather_control");
+    public static final ResourceKey<Kamikotization> BUBBLE_CAPTURE = create("bubble_capture");
 
     private static ResourceKey<Kamikotization> create(String id) {
         return ResourceKey.create(MineraculousRegistries.KAMIKOTIZATION, MineraculousKamikotizations.modLoc(id));
@@ -24,6 +25,11 @@ public class MineraculousKamikotizationsKamikotizations {
                 "Stormy Weather",
                 ItemPredicate.Builder.item().of(MineraculousKamikotizationsItemTags.UMBRELLA_TOOLS).withCount(MinMaxBounds.Ints.exactly(1)).build(),
                 Either.left(MineraculousKamikotizationsItems.WEATHER_CONTROL_PARASOL.toStack()),
+                List.of()));
+        context.register(BUBBLE_CAPTURE, new Kamikotization(
+                "Bubbler",
+                ItemPredicate.Builder.item().of(MineraculousKamikotizationsItemTags.BUBBLE_WANDS).withCount(MinMaxBounds.Ints.exactly(1)).build(),
+                Either.left(MineraculousKamikotizationsItems.BUBBLE_SWORD.toStack()),
                 List.of()));
     }
 }

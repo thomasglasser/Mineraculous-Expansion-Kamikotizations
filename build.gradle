@@ -168,6 +168,7 @@ dependencies {
 	jarJar implementation("dev.thomasglasser.tommylib:tommylib-neoforge-${minecraft_version}:${tommylib_version}")
 
 	implementation "dev.thomasglasser.mineraculous:mineraculous-${minecraft_version}:${mineraculous_version}"
+	implementation "top.theillusivec4.curios:curios-neoforge:${curios_version}"
 
 	// Runtime
 	localRuntime "maven.modrinth:jade:${jade_version}+neoforge"

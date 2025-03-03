@@ -8,6 +8,7 @@ import net.minecraft.world.item.Item;
 
 public class MineraculousKamikotizationsItemTags {
     public static final TagKey<Item> PARASOLS = create("parasols");
+    public static final TagKey<Item> BUBBLE_WANDS = create("bubble_wands");
 
     public static final TagKey<Item> UMBRELLA_TOOLS = createC("tools/umbrella");
 

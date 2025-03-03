@@ -3,10 +3,14 @@ package dev.thomasglasser.mineraculouskamikotizations.data;
 import dev.thomasglasser.mineraculous.core.registries.MineraculousRegistries;
 import dev.thomasglasser.mineraculouskamikotizations.MineraculousKamikotizations;
 import dev.thomasglasser.mineraculouskamikotizations.data.advancements.MineraculousKamikotizationsAdvancementProvider;
+import dev.thomasglasser.mineraculouskamikotizations.data.curios.MineraculousKamikotizationsCuriosProvider;
 import dev.thomasglasser.mineraculouskamikotizations.data.datamaps.MineraculousKamikotizationsDataMapProvider;
 import dev.thomasglasser.mineraculouskamikotizations.data.lang.MineraculousKamikotizationsEnUsLanguageProvider;
 import dev.thomasglasser.mineraculouskamikotizations.data.loot.MineraculousKamikotizationsLootTables;
+import dev.thomasglasser.mineraculouskamikotizations.data.models.MineraculousKamikotizationsItemModelProvider;
+import dev.thomasglasser.mineraculouskamikotizations.data.particles.MineraculousKamikotizationsParticleDescriptionProvider;
 import dev.thomasglasser.mineraculouskamikotizations.data.recipes.MineraculousKamikotizationsRecipeProvider;
+import dev.thomasglasser.mineraculouskamikotizations.data.tags.MineraculousKamikotizationsDamageTypeTagsProvider;
 import dev.thomasglasser.mineraculouskamikotizations.data.tags.MineraculousKamikotizationsItemTagsProvider;
 import dev.thomasglasser.mineraculouskamikotizations.world.entity.kamikotization.MineraculousKamikotizationsKamikotizations;
 import dev.thomasglasser.tommylib.api.data.info.ModRegistryDumpReport;
@@ -40,11 +44,15 @@ public class MineraculousKamikotizationsDataGenerators {
         registries = datapackBuiltinEntriesProvider.getRegistryProvider();
         generator.addProvider(includeServer, new ModRegistryDumpReport(packOutput, MineraculousKamikotizations.MOD_ID, registries));
         generator.addProvider(includeServer, new MineraculousKamikotizationsItemTagsProvider(packOutput, registries, CompletableFuture.completedFuture(null), existingFileHelper));
+        generator.addProvider(includeServer, new MineraculousKamikotizationsDamageTypeTagsProvider(packOutput, registries, existingFileHelper));
         generator.addProvider(includeServer, new MineraculousKamikotizationsAdvancementProvider(packOutput, registries, existingFileHelper, enUs));
         generator.addProvider(includeServer, new MineraculousKamikotizationsDataMapProvider(packOutput, registries));
         generator.addProvider(includeServer, new MineraculousKamikotizationsLootTables(packOutput, registries));
         generator.addProvider(includeServer, new MineraculousKamikotizationsRecipeProvider(packOutput, registries));
+        generator.addProvider(includeServer, new MineraculousKamikotizationsCuriosProvider(packOutput, existingFileHelper, registries));
 
         generator.addProvider(includeClient, enUs);
+        generator.addProvider(includeClient, new MineraculousKamikotizationsParticleDescriptionProvider(packOutput, existingFileHelper));
+        generator.addProvider(includeClient, new MineraculousKamikotizationsItemModelProvider(packOutput, existingFileHelper));
     }
 }
