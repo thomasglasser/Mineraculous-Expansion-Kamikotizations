@@ -1,6 +1,6 @@
 package dev.thomasglasser.mineraculouskamikotizations.world.level.storage.loot;
 
-import dev.thomasglasser.mineraculous.Mineraculous;
+import dev.thomasglasser.mineraculouskamikotizations.MineraculousKamikotizations;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -13,6 +13,6 @@ public class MineraculousKamikotizationsLuckyCharmLootKeys {
     }
 
     private static ResourceKey<LootTable> modLoc(String name) {
-        return ResourceKey.create(Registries.LOOT_TABLE, Mineraculous.modLoc("gameplay/lucky_charm/" + name));
+        return ResourceKey.create(Registries.LOOT_TABLE, MineraculousKamikotizations.modLoc("gameplay/lucky_charm/" + name));
     }
 }
