@@ -2,11 +2,8 @@ package dev.thomasglasser.mineraculouskamikotizations.data.recipes;
 
 import dev.thomasglasser.mineraculouskamikotizations.tags.MineraculousKamikotizationsItemTags;
 import dev.thomasglasser.mineraculouskamikotizations.world.item.MineraculousKamikotizationsItems;
-import dev.thomasglasser.mineraculouskamikotizations.world.item.ParasolItem;
 import dev.thomasglasser.tommylib.api.data.recipes.ExtendedRecipeProvider;
-import dev.thomasglasser.tommylib.api.registration.DeferredItem;
 import dev.thomasglasser.tommylib.api.tags.ConventionalItemTags;
-import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;

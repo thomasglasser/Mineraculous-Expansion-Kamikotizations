@@ -6,6 +6,7 @@ import dev.thomasglasser.mineraculouskamikotizations.data.advancements.Mineracul
 import dev.thomasglasser.mineraculouskamikotizations.data.datamaps.MineraculousKamikotizationsDataMapProvider;
 import dev.thomasglasser.mineraculouskamikotizations.data.lang.MineraculousKamikotizationsEnUsLanguageProvider;
 import dev.thomasglasser.mineraculouskamikotizations.data.loot.MineraculousKamikotizationsLootTables;
+import dev.thomasglasser.mineraculouskamikotizations.data.modonomicons.MineraculousKamikotizationsBookProvider;
 import dev.thomasglasser.mineraculouskamikotizations.data.recipes.MineraculousKamikotizationsRecipeProvider;
 import dev.thomasglasser.mineraculouskamikotizations.data.tags.MineraculousKamikotizationsItemTagsProvider;
 import dev.thomasglasser.mineraculouskamikotizations.world.entity.kamikotization.MineraculousKamikotizationsKamikotizations;
@@ -44,6 +45,7 @@ public class MineraculousKamikotizationsDataGenerators {
         generator.addProvider(includeServer, new MineraculousKamikotizationsDataMapProvider(packOutput, registries));
         generator.addProvider(includeServer, new MineraculousKamikotizationsLootTables(packOutput, registries));
         generator.addProvider(includeServer, new MineraculousKamikotizationsRecipeProvider(packOutput, registries));
+        generator.addProvider(includeServer, new MineraculousKamikotizationsBookProvider(packOutput, registries, enUs::add));
 
         generator.addProvider(includeClient, enUs);
     }

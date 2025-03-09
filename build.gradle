@@ -169,6 +169,8 @@ dependencies {
 
 	implementation "dev.thomasglasser.mineraculous:mineraculous-${minecraft_version}:${mineraculous_version}"
 
+	implementation "com.klikli_dev:modonomicon-${minecraft_version}-neoforge:${modonomicon_version}"
+
 	// Runtime
 	localRuntime "maven.modrinth:jade:${jade_version}+neoforge"
 	localRuntime "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
