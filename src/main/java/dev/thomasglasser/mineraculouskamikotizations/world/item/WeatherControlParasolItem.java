@@ -27,6 +27,7 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -194,6 +195,7 @@ public class WeatherControlParasolItem extends ParasolItem implements Kamikotize
                         }
                     }
                 };
+                lightningBolt.setCause((ServerPlayer) finalOwner);
                 if (hitresult instanceof EntityHitResult entityHitResult) {
                     lightningBolt.setPos(entityHitResult.getEntity().position());
                 } else
