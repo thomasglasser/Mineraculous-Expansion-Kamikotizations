@@ -24,6 +24,7 @@ public class MineraculousKamikotizationsEnUsLanguageProvider extends Mineraculou
         }
 
         add(MineraculousKamikotizationsItems.WEATHER_CONTROL_PARASOL.get(), "Weather Control Parasol");
+        add(MineraculousKamikotizationsItems.BUBBLE_SWORD.get(), "Bubble Sword");
 
         add(WeatherControlParasolItem.Ability.ICE, "Ice");
         add(WeatherControlParasolItem.Ability.LIGHTNING, "Lightning");
@@ -31,6 +32,7 @@ public class MineraculousKamikotizationsEnUsLanguageProvider extends Mineraculou
         add(WeatherControlParasolItem.Ability.WIND, "Wind");
 
         add(MineraculousKamikotizationsKamikotizations.WEATHER_CONTROL, "Weather Control");
+        add(MineraculousKamikotizationsKamikotizations.BUBBLE_CAPTURE, "Bubble Capture");
 
         add(MineraculousKamikotizationsCreativeModeTabs.MINERACULOUS_KAMIKOTIZATIONS.get(), "Mineraculous Expansion: Kamikotizations");
 

@@ -1,10 +1,14 @@
 package dev.thomasglasser.mineraculouskamikotizations.data.models;
 
+import dev.thomasglasser.mineraculous.world.item.MineraculousItemDisplayContexts;
 import dev.thomasglasser.mineraculouskamikotizations.MineraculousKamikotizations;
 import dev.thomasglasser.mineraculouskamikotizations.world.item.MineraculousKamikotizationsItems;
 import dev.thomasglasser.tommylib.api.data.models.ExtendedItemModelProvider;
+import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.ItemDisplayContext;
+import net.neoforged.neoforge.client.model.generators.ItemModelBuilder;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 public class MineraculousKamikotizationsItemModelProvider extends ExtendedItemModelProvider {
@@ -18,5 +22,24 @@ public class MineraculousKamikotizationsItemModelProvider extends ExtendedItemMo
             // TODO: Parasols
             basicItem(MineraculousKamikotizationsItems.BUBBLE_WANDS.get(color).get());
         }
+
+        ItemModelBuilder inHandBubbleSword = withExistingParent("item/bubble_sword_in_hand", modItemLoc("bubble_sword_in_hand"));
+        ItemModelBuilder inventoryBubbleSword = basicItem(MineraculousKamikotizationsItems.BUBBLE_SWORD.getId().withPath(path -> path + "_inventory")).guiLight(BlockModel.GuiLight.FRONT);
+        ItemModelBuilder onBackBubbleSword = withExistingParent("item/bubble_sword_on_back", modItemLoc("bubble_sword_in_hand"))
+                .texture("texture", modItemLoc("bubble_sword_on_back"))
+                .transforms()
+                .transform(MineraculousItemDisplayContexts.CURIOS_OTHER.getValue())
+                .translation(0, -2.5F, 4.5F)
+                .end()
+                .end();
+        generatedModels.remove(inHandBubbleSword.getLocation());
+        generatedModels.remove(inventoryBubbleSword.getLocation());
+        generatedModels.remove(onBackBubbleSword.getLocation());
+        withSeparateTransforms(MineraculousKamikotizationsItems.BUBBLE_SWORD)
+                .base(inHandBubbleSword)
+                .perspective(ItemDisplayContext.GUI, inventoryBubbleSword)
+                .perspective(ItemDisplayContext.FIXED, inventoryBubbleSword)
+                .perspective(ItemDisplayContext.GROUND, inventoryBubbleSword)
+                .perspective(MineraculousItemDisplayContexts.CURIOS_OTHER.getValue(), onBackBubbleSword);
     }
 }

@@ -1,5 +1,6 @@
 package dev.thomasglasser.mineraculouskamikotizations.client;
 
+import dev.thomasglasser.mineraculous.client.renderer.item.curio.ContextDependentCurioRenderer;
 import dev.thomasglasser.mineraculous.world.item.MineraculousItems;
 import dev.thomasglasser.mineraculouskamikotizations.client.particle.FloatingBubbleParticle;
 import dev.thomasglasser.mineraculouskamikotizations.client.renderer.item.MineraculousKamikotizationsItemProperties;
@@ -15,9 +16,12 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
+import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
 
 public class MineraculousKamikotizationsClientEvents {
     public static void onFMLClientSetup(FMLClientSetupEvent event) {
+        CuriosRendererRegistry.register(MineraculousKamikotizationsItems.BUBBLE_SWORD.get(), ContextDependentCurioRenderer::new);
+
         MineraculousKamikotizationsItemProperties.init();
     }
 

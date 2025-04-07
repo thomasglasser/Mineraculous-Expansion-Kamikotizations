@@ -22,7 +22,7 @@ public class MineraculousKamikotizationsItems {
 
     // Kamikotization Tools
     public static final DeferredItem<WeatherControlParasolItem> WEATHER_CONTROL_PARASOL = ITEMS.register("weather_control_parasol", () -> new WeatherControlParasolItem(new Item.Properties().stacksTo(1).attributes(ItemAttributeModifiers.builder().add(NeoForgeMod.CREATIVE_FLIGHT, new AttributeModifier(MineraculousKamikotizations.modLoc("parasol_flight"), 1, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.ANY).build())));
-    public static final DeferredItem<BubbleSwordItem> BUBBLE_SWORD = ITEMS.register("bubble_sword", () -> new BubbleSwordItem(new Item.Properties().stacksTo(1).attributes(ItemAttributeModifiers.builder().add(NeoForgeMod.CREATIVE_FLIGHT, new AttributeModifier(MineraculousKamikotizations.modLoc("sword_flight"), 1, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.ANY).build())));
+    public static final DeferredItem<BubbleSwordItem> BUBBLE_SWORD = ITEMS.register("bubble_sword", () -> new BubbleSwordItem(new Item.Properties().stacksTo(1).attributes(ItemAttributeModifiers.builder().add(NeoForgeMod.CREATIVE_FLIGHT, BubbleSwordItem.FLIGHT_MODIFIER, EquipmentSlotGroup.ANY).build())));
 
     private static SortedMap<DyeColor, DeferredItem<ParasolItem>> parasols() {
         SortedMap<DyeColor, DeferredItem<ParasolItem>> parasols = new Object2ObjectLinkedOpenHashMap<>();
