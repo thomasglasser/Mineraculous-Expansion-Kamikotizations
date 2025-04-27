@@ -3,6 +3,7 @@ package dev.thomasglasser.mineraculouskamikotizations.client;
 import dev.thomasglasser.mineraculous.client.renderer.item.curio.ContextDependentCurioRenderer;
 import dev.thomasglasser.mineraculous.world.item.MineraculousItems;
 import dev.thomasglasser.mineraculouskamikotizations.client.particle.FloatingBubbleParticle;
+import dev.thomasglasser.mineraculouskamikotizations.client.renderer.entity.BubblePrisonRenderer;
 import dev.thomasglasser.mineraculouskamikotizations.client.renderer.item.MineraculousKamikotizationsItemProperties;
 import dev.thomasglasser.mineraculouskamikotizations.core.particles.MineraculousKamikotizationsParticleTypes;
 import dev.thomasglasser.mineraculouskamikotizations.world.entity.MineraculousKamikotizationsEntityTypes;
@@ -87,6 +88,7 @@ public class MineraculousKamikotizationsClientEvents {
 
     public static void onRegisterRenderer(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(MineraculousKamikotizationsEntityTypes.ICE_CHARGE.get(), ThrownItemRenderer::new);
+        event.registerEntityRenderer(MineraculousKamikotizationsEntityTypes.BUBBLE_PRISON.get(), BubblePrisonRenderer::new);
     }
 
     public static void onRegisterParticleProviders(RegisterParticleProvidersEvent event) {

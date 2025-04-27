@@ -13,10 +13,10 @@ public class MineraculousKamikotizationsEntityTypes {
 
     public static final DeferredHolder<EntityType<?>, EntityType<IceCharge>> ICE_CHARGE = ENTITY_TYPES.register("ice_charge", () -> EntityType.Builder.<IceCharge>of(IceCharge::new, MobCategory.MISC)
             .sized(0.3125F, 0.3125F)
-            .eyeHeight(0.0F)
-            .clientTrackingRange(4)
-            .updateInterval(10)
             .build("ice_charge"));
+    public static final DeferredHolder<EntityType<?>, EntityType<BubblePrison>> BUBBLE_PRISON = ENTITY_TYPES.register("bubble_prison", () -> EntityType.Builder.<BubblePrison>of(BubblePrison::new, MobCategory.MISC)
+            .sized(4F, 4F)
+            .build("bubble_prison"));
 
     public static void init() {}
 }

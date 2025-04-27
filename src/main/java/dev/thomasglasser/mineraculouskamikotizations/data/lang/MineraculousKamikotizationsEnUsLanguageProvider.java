@@ -39,5 +39,6 @@ public class MineraculousKamikotizationsEnUsLanguageProvider extends Mineraculou
         add(MineraculousKamikotizationsKeyMappings.OPEN_PARASOL.get(), "Open Parasol");
 
         add(MineraculousKamikotizationsEntityTypes.ICE_CHARGE.get(), "Ice Charge");
+        add(MineraculousKamikotizationsEntityTypes.BUBBLE_PRISON.get(), "Bubble Prison");
     }
 }
