@@ -11,7 +11,7 @@ import dev.thomasglasser.mineraculouskamikotizations.data.recipes.MineraculousKa
 import dev.thomasglasser.mineraculouskamikotizations.data.tags.MineraculousKamikotizationsItemTagsProvider;
 import dev.thomasglasser.mineraculouskamikotizations.world.entity.kamikotization.MineraculousKamikotizationsKamikotizations;
 import dev.thomasglasser.tommylib.api.data.info.ModRegistryDumpReport;
-import java.util.Set;
+import it.unimi.dsi.fastutil.objects.ReferenceOpenHashSet;
 import java.util.concurrent.CompletableFuture;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistrySetBuilder;
@@ -34,9 +34,11 @@ public class MineraculousKamikotizationsDataGenerators {
         boolean includeServer = event.includeServer();
         boolean includeClient = event.includeClient();
 
+        // Lang
         MineraculousKamikotizationsEnUsLanguageProvider enUs = new MineraculousKamikotizationsEnUsLanguageProvider(packOutput);
 
-        DatapackBuiltinEntriesProvider datapackBuiltinEntriesProvider = new DatapackBuiltinEntriesProvider(packOutput, registries, BUILDER, Set.of(MineraculousKamikotizations.MOD_ID));
+        // Server
+        DatapackBuiltinEntriesProvider datapackBuiltinEntriesProvider = new DatapackBuiltinEntriesProvider(packOutput, registries, BUILDER, ReferenceOpenHashSet.of(MineraculousKamikotizations.MOD_ID));
         generator.addProvider(includeServer, datapackBuiltinEntriesProvider);
         registries = datapackBuiltinEntriesProvider.getRegistryProvider();
         generator.addProvider(includeServer, new ModRegistryDumpReport(packOutput, MineraculousKamikotizations.MOD_ID, registries));
@@ -47,6 +49,7 @@ public class MineraculousKamikotizationsDataGenerators {
         generator.addProvider(includeServer, new MineraculousKamikotizationsRecipeProvider(packOutput, registries));
         generator.addProvider(includeServer, new MineraculousKamikotizationsBookProvider(packOutput, registries, enUs::add));
 
+        // Client
         generator.addProvider(includeClient, enUs);
     }
 }

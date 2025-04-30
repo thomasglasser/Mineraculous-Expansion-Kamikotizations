@@ -159,6 +159,7 @@ dependencies {
 	jarJar implementation("dev.thomasglasser.tommylib:tommylib-neoforge-${minecraft_version}:${tommylib_version}")
 
 	implementation "dev.thomasglasser.mineraculous:mineraculous-${minecraft_version}:${mineraculous_version}"
+	implementation "net.tslat.smartbrainlib:SmartBrainLib-neoforge-${minecraft_version}:${smartbrainlib_version}"
 
 	implementation "com.klikli_dev:modonomicon-${minecraft_version}-neoforge:${modonomicon_version}"
 

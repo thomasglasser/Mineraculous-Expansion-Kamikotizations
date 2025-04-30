@@ -15,8 +15,8 @@ import net.minecraft.resources.ResourceKey;
 public class MineraculousKamikotizationsKamikotizations {
     public static final ResourceKey<Kamikotization> WEATHER_CONTROL = create("weather_control");
 
-    private static ResourceKey<Kamikotization> create(String id) {
-        return ResourceKey.create(MineraculousRegistries.KAMIKOTIZATION, MineraculousKamikotizations.modLoc(id));
+    private static ResourceKey<Kamikotization> create(String name) {
+        return ResourceKey.create(MineraculousRegistries.KAMIKOTIZATION, MineraculousKamikotizations.modLoc(name));
     }
 
     public static void bootstrap(BootstrapContext<Kamikotization> context) {
