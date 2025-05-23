@@ -5,7 +5,7 @@ import dev.thomasglasser.mineraculous.client.gui.screens.RadialMenuOption;
 import dev.thomasglasser.mineraculous.world.attachment.MineraculousAttachmentTypes;
 import dev.thomasglasser.mineraculous.world.entity.miraculous.MineraculousMiraculous;
 import dev.thomasglasser.mineraculous.world.item.KamikotizedPowerSourceItem;
-import dev.thomasglasser.mineraculous.world.item.ToolWheelProvider;
+import dev.thomasglasser.mineraculous.world.item.RadialMenuProvider;
 import dev.thomasglasser.mineraculous.world.level.storage.MiraculousRecoveryDataHolder;
 import dev.thomasglasser.mineraculouskamikotizations.core.component.MineraculousKamikotizationsDataComponents;
 import dev.thomasglasser.mineraculouskamikotizations.world.entity.MineraculousKamikotizationsEntityTypes;
@@ -15,8 +15,10 @@ import dev.thomasglasser.mineraculouskamikotizations.world.entity.grieftracking.
 import dev.thomasglasser.mineraculouskamikotizations.world.level.storage.KamikotizationData;
 import dev.thomasglasser.tommylib.api.client.ClientUtils;
 import io.netty.buffer.ByteBuf;
+import it.unimi.dsi.fastutil.objects.ReferenceArrayList;
+import java.util.List;
+import java.util.function.Supplier;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -40,7 +42,7 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 
-public class WeatherControlParasolItem extends Item implements KamikotizedPowerSourceItem, ToolWheelProvider<WeatherControlParasolItem.Ability> {
+public class WeatherControlParasolItem extends Item implements KamikotizedPowerSourceItem, RadialMenuProvider<WeatherControlParasolItem.Ability> {
     public WeatherControlParasolItem(Properties properties) {
         super(properties);
     }
@@ -112,7 +114,7 @@ public class WeatherControlParasolItem extends Item implements KamikotizedPowerS
     }
 
     @Override
-    public int getColor(ItemStack stack) {
+    public int getColor(ItemStack stack, InteractionHand hand) {
         Level level = ClientUtils.getLevel();
         Player player = ClientUtils.getLocalPlayer();
         if (level != null && player != null) {
@@ -129,12 +131,12 @@ public class WeatherControlParasolItem extends Item implements KamikotizedPowerS
     }
 
     @Override
-    public Ability[] getOptions(ItemStack itemStack) {
-        return Ability.values();
+    public List<Ability> getOptions(ItemStack itemStack, InteractionHand hand) {
+        return Ability.valuesList();
     }
 
     @Override
-    public Holder<DataComponentType<?>> getComponentType() {
+    public Supplier<DataComponentType<Ability>> getComponentType(ItemStack stack, InteractionHand hand) {
         return MineraculousKamikotizationsDataComponents.WEATHER_CONTROL_PARASOL_ABILITY;
     }
 
@@ -146,6 +148,8 @@ public class WeatherControlParasolItem extends Item implements KamikotizedPowerS
 
         public static final Codec<Ability> CODEC = Codec.STRING.xmap(Ability::of, Ability::getSerializedName);
         public static final StreamCodec<ByteBuf, Ability> STREAM_CODEC = ByteBufCodecs.STRING_UTF8.map(Ability::of, Ability::getSerializedName);
+
+        private static final List<Ability> VALUES_LIST = new ReferenceArrayList<>(values());
 
         private final String translationKey;
 
@@ -161,6 +165,10 @@ public class WeatherControlParasolItem extends Item implements KamikotizedPowerS
         @Override
         public String getSerializedName() {
             return name().toLowerCase();
+        }
+
+        public static List<Ability> valuesList() {
+            return VALUES_LIST;
         }
 
         public static Ability of(String name) {

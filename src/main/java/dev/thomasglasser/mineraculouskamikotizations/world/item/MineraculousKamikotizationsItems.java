@@ -19,7 +19,7 @@ public class MineraculousKamikotizationsItems {
     private static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(MineraculousKamikotizations.MOD_ID);
 
     // Parasols
-    private static final Supplier<Item.Properties> PARASOL_PROPERTIES = () -> new Item.Properties().stacksTo(1).component(MineraculousDataComponents.OPEN, true);
+    private static final Supplier<Item.Properties> PARASOL_PROPERTIES = () -> new Item.Properties().stacksTo(1).component(MineraculousDataComponents.ACTIVE, false);
     public static final Map<DyeColor, DeferredItem<?>> PARASOLS = parasols();
     public static final DeferredItem<WeatherControlParasolItem> WEATHER_CONTROL_PARASOL = ITEMS.register("weather_control_parasol", () -> new WeatherControlParasolItem(PARASOL_PROPERTIES.get()
             .attributes(ItemAttributeModifiers.builder()
