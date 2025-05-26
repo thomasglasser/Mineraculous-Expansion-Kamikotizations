@@ -13,16 +13,16 @@ import net.minecraft.world.entity.MobCategory;
 public class MineraculousKamikotizationsEntityTypes {
     private static final DeferredRegister.Entities ENTITY_TYPES = DeferredRegister.createEntities(MineraculousKamikotizations.MOD_ID);
 
-    public static final DeferredHolder<EntityType<?>, EntityType<IceCharge>> ICE_CHARGE = ENTITY_TYPES.registerEntityType("ice_charge", IceCharge::new, MobCategory.MISC, builder -> builder
+    public static final DeferredHolder<EntityType<?>, EntityType<IceCharge>> ICE_CHARGE = ENTITY_TYPES.register("ice_charge", IceCharge::new, MobCategory.MISC, builder -> builder
             .sized(0.3125F, 0.3125F));
 
     // Grief Tracking
-    public static final DeferredHolder<EntityType<?>, EntityType<GriefTrackingIceCharge>> GRIEF_TRACKING_ICE_CHARGE = ENTITY_TYPES.registerEntityType("grief_tracking_ice_charge", GriefTrackingIceCharge::new, MobCategory.MISC, builder -> builder
+    public static final DeferredHolder<EntityType<?>, EntityType<GriefTrackingIceCharge>> GRIEF_TRACKING_ICE_CHARGE = ENTITY_TYPES.register("grief_tracking_ice_charge", GriefTrackingIceCharge::new, MobCategory.MISC, builder -> builder
             .sized(0.3125F, 0.3125F));
-    public static final DeferredHolder<EntityType<?>, EntityType<GriefTrackingLightningBolt>> GRIEF_TRACKING_LIGHTNING_BOLT = ENTITY_TYPES.registerEntityType("grief_tracking_lightning_bolt", GriefTrackingLightningBolt::new, MobCategory.MISC, builder -> builder
+    public static final DeferredHolder<EntityType<?>, EntityType<GriefTrackingLightningBolt>> GRIEF_TRACKING_LIGHTNING_BOLT = ENTITY_TYPES.register("grief_tracking_lightning_bolt", GriefTrackingLightningBolt::new, MobCategory.MISC, builder -> builder
             .noSave()
             .sized(0.0F, 0.0F));
-    public static final DeferredHolder<EntityType<?>, EntityType<GriefTrackingWindCharge>> GRIEF_TRACKING_WIND_CHARGE = ENTITY_TYPES.registerEntityType("grief_tracking_wind_charge", GriefTrackingWindCharge::new, MobCategory.MISC, builder -> builder
+    public static final DeferredHolder<EntityType<?>, EntityType<GriefTrackingWindCharge>> GRIEF_TRACKING_WIND_CHARGE = ENTITY_TYPES.register("grief_tracking_wind_charge", GriefTrackingWindCharge::new, MobCategory.MISC, builder -> builder
             .sized(0.3125F, 0.3125F));
 
     public static void init() {}

@@ -17,14 +17,10 @@ public class MineraculousKamikotizationsEnUsLanguageProvider extends Mineraculou
 
     @Override
     protected void addTranslations() {
-        addKamikotizations();
         addItems();
         addEntities();
         addTabs();
-    }
-
-    protected void addKamikotizations() {
-        add(MineraculousKamikotizationsKamikotizations.WEATHER_CONTROL, "Weather Control");
+        addKamikotizations();
     }
 
     protected void addItems() {
@@ -50,5 +46,9 @@ public class MineraculousKamikotizationsEnUsLanguageProvider extends Mineraculou
 
     protected void addTabs() {
         add(MineraculousKamikotizationsCreativeModeTabs.MINERACULOUS_KAMIKOTIZATIONS.get(), "Mineraculous Expansion: Kamikotizations");
+    }
+
+    protected void addKamikotizations() {
+        add(MineraculousKamikotizationsKamikotizations.WEATHER_CONTROL, "Weather Control");
     }
 }

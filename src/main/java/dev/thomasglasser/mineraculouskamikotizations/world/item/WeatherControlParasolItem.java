@@ -3,7 +3,7 @@ package dev.thomasglasser.mineraculouskamikotizations.world.item;
 import com.mojang.serialization.Codec;
 import dev.thomasglasser.mineraculous.client.gui.screens.RadialMenuOption;
 import dev.thomasglasser.mineraculous.world.attachment.MineraculousAttachmentTypes;
-import dev.thomasglasser.mineraculous.world.entity.miraculous.MineraculousMiraculous;
+import dev.thomasglasser.mineraculous.world.entity.miraculous.Miraculouses;
 import dev.thomasglasser.mineraculous.world.item.KamikotizedPowerSourceItem;
 import dev.thomasglasser.mineraculous.world.item.RadialMenuProvider;
 import dev.thomasglasser.mineraculous.world.level.storage.MiraculousRecoveryDataHolder;
@@ -118,7 +118,7 @@ public class WeatherControlParasolItem extends Item implements KamikotizedPowerS
         Level level = ClientUtils.getLevel();
         Player player = ClientUtils.getLocalPlayer();
         if (level != null && player != null) {
-            int color = level.holderOrThrow(MineraculousMiraculous.BUTTERFLY).value().color().getValue();
+            int color = level.holderOrThrow(Miraculouses.BUTTERFLY).value().color().getValue();
             ResolvableProfile resolvableProfile = stack.get(DataComponents.PROFILE);
             if (resolvableProfile != null) {
                 Player owner = level.getPlayerByUUID(resolvableProfile.id().orElse(resolvableProfile.gameProfile().getId()));
