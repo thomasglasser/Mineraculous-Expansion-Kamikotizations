@@ -15,7 +15,7 @@ public class MineraculousKamikotizationsDataMapProvider extends DataMapProvider 
     }
 
     @Override
-    protected void gather() {
+    protected void gather(HolderLookup.Provider provider) {
         builder(MineraculousDataMaps.KAMIKOTIZATION_LUCKY_CHARMS)
                 .add(MineraculousKamikotizationsKamikotizations.WEATHER_CONTROL, new LuckyCharms(MineraculousKamikotizationsLuckyCharmLootKeys.WEATHER_CONTROL), false)
                 .build();
