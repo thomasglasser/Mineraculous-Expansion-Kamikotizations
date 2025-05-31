@@ -1,7 +1,8 @@
 package dev.thomasglasser.mineraculouskamikotizations.world.entity.grieftracking;
 
-import dev.thomasglasser.mineraculous.world.level.storage.MiraculousRecoveryDataHolder;
+import dev.thomasglasser.mineraculous.world.level.storage.MiraculousRecoveryEntityData;
 import dev.thomasglasser.mineraculouskamikotizations.world.entity.MineraculousKamikotizationsEntityTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.windcharge.AbstractWindCharge;
@@ -32,8 +33,8 @@ public class GriefTrackingWindCharge extends WindCharge {
 
     @Override
     protected void onHitEntity(EntityHitResult result) {
-        if (!level().isClientSide() && getOwner() != null) {
-            ((MiraculousRecoveryDataHolder) level().getServer().overworld()).mineraculous$getMiraculousRecoveryEntityData().putRecoverable(getOwner().getUUID(), result.getEntity());
+        if (level() instanceof ServerLevel level && getOwner() != null) {
+            MiraculousRecoveryEntityData.get(level).putRecoverable(getOwner().getUUID(), result.getEntity());
         }
         super.onHitEntity(result);
     }

@@ -6,7 +6,9 @@ import dev.thomasglasser.mineraculous.world.attachment.MineraculousAttachmentTyp
 import dev.thomasglasser.mineraculous.world.entity.miraculous.Miraculouses;
 import dev.thomasglasser.mineraculous.world.item.KamikotizedPowerSourceItem;
 import dev.thomasglasser.mineraculous.world.item.RadialMenuProvider;
-import dev.thomasglasser.mineraculous.world.level.storage.MiraculousRecoveryDataHolder;
+import dev.thomasglasser.mineraculous.world.level.storage.MiraculousRecoveryBlockData;
+import dev.thomasglasser.mineraculous.world.level.storage.MiraculousRecoveryEntityData;
+import dev.thomasglasser.mineraculous.world.level.storage.MiraculousRecoveryItemData;
 import dev.thomasglasser.mineraculouskamikotizations.core.component.MineraculousKamikotizationsDataComponents;
 import dev.thomasglasser.mineraculouskamikotizations.world.entity.MineraculousKamikotizationsEntityTypes;
 import dev.thomasglasser.mineraculouskamikotizations.world.entity.grieftracking.GriefTrackingIceCharge;
@@ -102,10 +104,10 @@ public class WeatherControlParasolItem extends Item implements KamikotizedPowerS
 
     @Override
     public void restore(LivingEntity entity) {
-        MiraculousRecoveryDataHolder recoveryDataHolder = (MiraculousRecoveryDataHolder) entity.level().getServer().overworld();
-        recoveryDataHolder.mineraculous$getMiraculousRecoveryBlockData().recover(entity.getUUID(), (ServerLevel) entity.level());
-        recoveryDataHolder.mineraculous$getMiraculousRecoveryItemData().markRecovered(entity.getUUID());
-        recoveryDataHolder.mineraculous$getMiraculousRecoveryEntityData().recover(entity.getUUID(), (ServerLevel) entity.level(), e -> e);
+        ServerLevel level = (ServerLevel) entity.level();
+        MiraculousRecoveryBlockData.get(level).recover(entity.getUUID(), (ServerLevel) entity.level());
+        MiraculousRecoveryItemData.get(level).markRecovered(entity.getUUID());
+        MiraculousRecoveryEntityData.get(level).recover(entity.getUUID(), (ServerLevel) entity.level(), e -> e);
         KamikotizationData overworldData = entity.getServer().overworld().getDataStorage().computeIfAbsent(KamikotizationData.factory(), KamikotizationData.FILE_ID);
         if (overworldData.wasWeatherModified()) {
             entity.getServer().overworld().resetWeatherCycle();

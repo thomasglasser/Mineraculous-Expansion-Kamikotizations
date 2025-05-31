@@ -1,10 +1,12 @@
 package dev.thomasglasser.mineraculouskamikotizations.world.entity.grieftracking;
 
-import dev.thomasglasser.mineraculous.world.level.storage.MiraculousRecoveryDataHolder;
+import dev.thomasglasser.mineraculous.world.level.storage.MiraculousRecoveryBlockData;
+import dev.thomasglasser.mineraculous.world.level.storage.MiraculousRecoveryEntityData;
 import it.unimi.dsi.fastutil.objects.Reference2ReferenceOpenHashMap;
 import java.util.List;
 import java.util.Map;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
@@ -22,20 +24,20 @@ public class GriefTrackingLightningBolt extends LightningBolt {
 
     @Override
     public void tick() {
-        if (!visualOnly && !level().isClientSide() && getCause() != null) {
+        if (!visualOnly && level() instanceof ServerLevel level && getCause() != null) {
             List<Entity> hit = EntityRetrievalUtil.getEntities(
                     level(),
                     new AABB(this.getX() - 3.0, this.getY() - 3.0, this.getZ() - 3.0, this.getX() + 3.0, this.getY() + 6.0 + 3.0, this.getZ() + 3.0),
                     Entity::isAlive);
             for (Entity entity : hit)
-                ((MiraculousRecoveryDataHolder) level().getServer().overworld()).mineraculous$getMiraculousRecoveryEntityData().putRecoverable(getCause().getUUID(), entity);
+                MiraculousRecoveryEntityData.get(level).putRecoverable(getCause().getUUID(), entity);
         }
         super.tick();
     }
 
     @Override
     protected void spawnFire(int extraIgnitions) {
-        if (!this.visualOnly && !this.level().isClientSide && getCause() != null && this.level().getGameRules().getBoolean(GameRules.RULE_DOFIRETICK)) {
+        if (!this.visualOnly && level() instanceof ServerLevel level && getCause() != null && this.level().getGameRules().getBoolean(GameRules.RULE_DOFIRETICK)) {
             Map<BlockPos, BlockState> alteredBlocks = new Reference2ReferenceOpenHashMap<>();
             BlockPos blockpos = this.blockPosition();
             BlockState oldState = this.level().getBlockState(blockpos);
@@ -57,7 +59,7 @@ public class GriefTrackingLightningBolt extends LightningBolt {
                     alteredBlocks.put(mutable, blockstate);
                 }
             }
-            ((MiraculousRecoveryDataHolder) level().getServer().overworld()).mineraculous$getMiraculousRecoveryBlockData().putRecoverable(getCause().getUUID(), alteredBlocks);
+            MiraculousRecoveryBlockData.get(level).putRecoverable(getCause().getUUID(), alteredBlocks);
         }
     }
 }

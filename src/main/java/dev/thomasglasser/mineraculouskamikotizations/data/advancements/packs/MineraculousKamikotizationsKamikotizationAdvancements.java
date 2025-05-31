@@ -6,13 +6,13 @@ import dev.thomasglasser.mineraculouskamikotizations.MineraculousKamikotizations
 import dev.thomasglasser.mineraculouskamikotizations.world.entity.kamikotization.MineraculousKamikotizationsKamikotizations;
 import dev.thomasglasser.mineraculouskamikotizations.world.item.MineraculousKamikotizationsItems;
 import dev.thomasglasser.tommylib.api.data.advancements.ExtendedAdvancementGenerator;
+import java.util.function.BiConsumer;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.core.HolderLookup;
-import net.neoforged.neoforge.common.data.LanguageProvider;
 
 public class MineraculousKamikotizationsKamikotizationAdvancements extends ExtendedAdvancementGenerator {
-    public MineraculousKamikotizationsKamikotizationAdvancements(LanguageProvider enUs) {
-        super(MineraculousKamikotizations.MOD_ID, "kamikotization", enUs);
+    public MineraculousKamikotizationsKamikotizationAdvancements(BiConsumer<String, String> lang) {
+        super(MineraculousKamikotizations.MOD_ID, "kamikotization", lang);
     }
 
     @Override

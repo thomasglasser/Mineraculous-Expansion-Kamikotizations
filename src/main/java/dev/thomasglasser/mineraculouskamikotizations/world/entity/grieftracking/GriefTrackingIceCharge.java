@@ -1,6 +1,7 @@
 package dev.thomasglasser.mineraculouskamikotizations.world.entity.grieftracking;
 
-import dev.thomasglasser.mineraculous.world.level.storage.MiraculousRecoveryDataHolder;
+import dev.thomasglasser.mineraculous.world.level.storage.MiraculousRecoveryBlockData;
+import dev.thomasglasser.mineraculous.world.level.storage.MiraculousRecoveryEntityData;
 import dev.thomasglasser.mineraculouskamikotizations.world.entity.MineraculousKamikotizationsEntityTypes;
 import dev.thomasglasser.mineraculouskamikotizations.world.entity.projectile.IceCharge;
 import it.unimi.dsi.fastutil.objects.Reference2ReferenceOpenHashMap;
@@ -8,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -33,11 +35,10 @@ public class GriefTrackingIceCharge extends IceCharge {
 
     @Override
     protected void onHitEntity(EntityHitResult result) {
-        if (!level().isClientSide && getOwner() != null) {
+        if (level() instanceof ServerLevel level && getOwner() != null) {
             Entity entity = result.getEntity();
-            MiraculousRecoveryDataHolder overworld = (MiraculousRecoveryDataHolder) level().getServer().overworld();
             UUID ownerUuid = getOwner().getUUID();
-            overworld.mineraculous$getMiraculousRecoveryEntityData().putRecoverable(ownerUuid, entity);
+            MiraculousRecoveryEntityData.get(level).putRecoverable(ownerUuid, entity);
             Set<BlockPos> inside = getInsidePos(entity);
             int blocksWide = Mth.ceil(entity.getBbWidth());
             int blocksHigh = Mth.ceil(entity.getBbHeight());
@@ -54,15 +55,14 @@ public class GriefTrackingIceCharge extends IceCharge {
                     }
                 }
             }
-            overworld.mineraculous$getMiraculousRecoveryBlockData().putRecoverable(ownerUuid, altered);
+            MiraculousRecoveryBlockData.get(level).putRecoverable(ownerUuid, altered);
         }
         super.onHitEntity(result);
     }
 
     @Override
     protected void onHitBlock(BlockHitResult result) {
-        if (!level().isClientSide && getOwner() != null) {
-            MiraculousRecoveryDataHolder overworld = (MiraculousRecoveryDataHolder) level().getServer().overworld();
+        if (level() instanceof ServerLevel level && getOwner() != null) {
             UUID ownerUuid = getOwner().getUUID();
             Map<BlockPos, BlockState> altered = new Reference2ReferenceOpenHashMap<>();
             BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
@@ -77,7 +77,7 @@ public class GriefTrackingIceCharge extends IceCharge {
                     }
                 }
             }
-            overworld.mineraculous$getMiraculousRecoveryBlockData().putRecoverable(ownerUuid, altered);
+            MiraculousRecoveryBlockData.get(level).putRecoverable(ownerUuid, altered);
         }
         super.onHitBlock(result);
     }
