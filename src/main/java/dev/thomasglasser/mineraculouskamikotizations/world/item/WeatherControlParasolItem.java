@@ -4,11 +4,11 @@ import com.mojang.serialization.Codec;
 import dev.thomasglasser.mineraculous.client.gui.screens.RadialMenuOption;
 import dev.thomasglasser.mineraculous.world.attachment.MineraculousAttachmentTypes;
 import dev.thomasglasser.mineraculous.world.entity.miraculous.Miraculouses;
-import dev.thomasglasser.mineraculous.world.item.KamikotizedPowerSourceItem;
+import dev.thomasglasser.mineraculous.world.item.EffectRevertingItem;
 import dev.thomasglasser.mineraculous.world.item.RadialMenuProvider;
-import dev.thomasglasser.mineraculous.world.level.storage.MiraculousRecoveryBlockData;
-import dev.thomasglasser.mineraculous.world.level.storage.MiraculousRecoveryEntityData;
-import dev.thomasglasser.mineraculous.world.level.storage.MiraculousRecoveryItemData;
+import dev.thomasglasser.mineraculous.world.level.storage.AbilityReversionBlockData;
+import dev.thomasglasser.mineraculous.world.level.storage.AbilityReversionEntityData;
+import dev.thomasglasser.mineraculous.world.level.storage.AbilityReversionItemData;
 import dev.thomasglasser.mineraculouskamikotizations.core.component.MineraculousKamikotizationsDataComponents;
 import dev.thomasglasser.mineraculouskamikotizations.world.entity.MineraculousKamikotizationsEntityTypes;
 import dev.thomasglasser.mineraculouskamikotizations.world.entity.grieftracking.GriefTrackingIceCharge;
@@ -33,6 +33,7 @@ import net.minecraft.stats.Stats;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
@@ -44,7 +45,7 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 
-public class WeatherControlParasolItem extends Item implements KamikotizedPowerSourceItem, RadialMenuProvider<WeatherControlParasolItem.Ability> {
+public class WeatherControlParasolItem extends Item implements EffectRevertingItem, RadialMenuProvider<WeatherControlParasolItem.Ability> {
     public WeatherControlParasolItem(Properties properties) {
         super(properties);
     }
@@ -103,11 +104,11 @@ public class WeatherControlParasolItem extends Item implements KamikotizedPowerS
     }
 
     @Override
-    public void restore(LivingEntity entity) {
+    public void revert(Entity entity) {
         ServerLevel level = (ServerLevel) entity.level();
-        MiraculousRecoveryBlockData.get(level).recover(entity.getUUID(), (ServerLevel) entity.level());
-        MiraculousRecoveryItemData.get(level).markRecovered(entity.getUUID());
-        MiraculousRecoveryEntityData.get(level).recover(entity.getUUID(), (ServerLevel) entity.level(), e -> e);
+        AbilityReversionBlockData.get(level).recover(entity.getUUID(), (ServerLevel) entity.level());
+        AbilityReversionItemData.get(level).markReverted(entity.getUUID());
+        AbilityReversionEntityData.get(level).revert(entity.getUUID(), (ServerLevel) entity.level());
         KamikotizationData overworldData = entity.getServer().overworld().getDataStorage().computeIfAbsent(KamikotizationData.factory(), KamikotizationData.FILE_ID);
         if (overworldData.wasWeatherModified()) {
             entity.getServer().overworld().resetWeatherCycle();
@@ -116,29 +117,25 @@ public class WeatherControlParasolItem extends Item implements KamikotizedPowerS
     }
 
     @Override
-    public int getColor(ItemStack stack, InteractionHand hand) {
-        Level level = ClientUtils.getLevel();
-        Player player = ClientUtils.getLocalPlayer();
-        if (level != null && player != null) {
-            int color = level.holderOrThrow(Miraculouses.BUTTERFLY).value().color().getValue();
-            ResolvableProfile resolvableProfile = stack.get(DataComponents.PROFILE);
-            if (resolvableProfile != null) {
-                Player owner = level.getPlayerByUUID(resolvableProfile.id().orElse(resolvableProfile.gameProfile().getId()));
-                if (owner != null && owner.getData(MineraculousAttachmentTypes.KAMIKOTIZATION).isPresent())
-                    color = owner.getData(MineraculousAttachmentTypes.KAMIKOTIZATION).get().kamikoData().nameColor();
-            }
-            return color;
+    public int getColor(ItemStack stack, InteractionHand hand, Player holder) {
+        Level level = holder.level();
+        int color = level.holderOrThrow(Miraculouses.BUTTERFLY).value().color().getValue();
+        ResolvableProfile resolvableProfile = stack.get(DataComponents.PROFILE);
+        if (resolvableProfile != null) {
+            Player owner = level.getPlayerByUUID(resolvableProfile.id().orElse(resolvableProfile.gameProfile().getId()));
+            if (owner != null && owner.getData(MineraculousAttachmentTypes.KAMIKOTIZATION).isPresent())
+                color = owner.getData(MineraculousAttachmentTypes.KAMIKOTIZATION).get().kamikoData().nameColor();
         }
-        return -1;
+        return color;
     }
 
     @Override
-    public List<Ability> getOptions(ItemStack itemStack, InteractionHand hand) {
+    public List<Ability> getOptions(ItemStack stack, InteractionHand hand, Player holder) {
         return Ability.valuesList();
     }
 
     @Override
-    public Supplier<DataComponentType<Ability>> getComponentType(ItemStack stack, InteractionHand hand) {
+    public Supplier<DataComponentType<Ability>> getComponentType(ItemStack stack, InteractionHand hand, Player holder) {
         return MineraculousKamikotizationsDataComponents.WEATHER_CONTROL_PARASOL_ABILITY;
     }
 

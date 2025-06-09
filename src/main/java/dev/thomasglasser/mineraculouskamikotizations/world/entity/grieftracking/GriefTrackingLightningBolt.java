@@ -1,7 +1,7 @@
 package dev.thomasglasser.mineraculouskamikotizations.world.entity.grieftracking;
 
-import dev.thomasglasser.mineraculous.world.level.storage.MiraculousRecoveryBlockData;
-import dev.thomasglasser.mineraculous.world.level.storage.MiraculousRecoveryEntityData;
+import dev.thomasglasser.mineraculous.world.level.storage.AbilityReversionBlockData;
+import dev.thomasglasser.mineraculous.world.level.storage.AbilityReversionEntityData;
 import it.unimi.dsi.fastutil.objects.Reference2ReferenceOpenHashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +30,7 @@ public class GriefTrackingLightningBolt extends LightningBolt {
                     new AABB(this.getX() - 3.0, this.getY() - 3.0, this.getZ() - 3.0, this.getX() + 3.0, this.getY() + 6.0 + 3.0, this.getZ() + 3.0),
                     Entity::isAlive);
             for (Entity entity : hit)
-                MiraculousRecoveryEntityData.get(level).putRecoverable(getCause().getUUID(), entity);
+                AbilityReversionEntityData.get(level).putRecoverable(getCause().getUUID(), entity);
         }
         super.tick();
     }
@@ -59,7 +59,7 @@ public class GriefTrackingLightningBolt extends LightningBolt {
                     alteredBlocks.put(mutable, blockstate);
                 }
             }
-            MiraculousRecoveryBlockData.get(level).putRecoverable(getCause().getUUID(), alteredBlocks);
+            AbilityReversionBlockData.get(level).putRecoverable(getCause().getUUID(), alteredBlocks);
         }
     }
 }
