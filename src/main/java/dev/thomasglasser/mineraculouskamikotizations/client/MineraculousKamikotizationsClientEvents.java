@@ -4,7 +4,9 @@ import dev.thomasglasser.mineraculous.world.item.MineraculousItems;
 import dev.thomasglasser.mineraculouskamikotizations.client.renderer.item.MineraculousKamikotizationsItemProperties;
 import dev.thomasglasser.mineraculouskamikotizations.world.entity.MineraculousKamikotizationsEntityTypes;
 import dev.thomasglasser.mineraculouskamikotizations.world.item.MineraculousKamikotizationsItems;
+import net.minecraft.client.renderer.entity.LightningBoltRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
+import net.minecraft.client.renderer.entity.WindChargeRenderer;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.DyeColor;
@@ -14,10 +16,12 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 
 public class MineraculousKamikotizationsClientEvents {
+    // Init
     public static void onFMLClientSetup(FMLClientSetupEvent event) {
         MineraculousKamikotizationsItemProperties.init();
     }
 
+    // Items
     public static void onBuildCreativeModeTabContents(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
 
@@ -60,7 +64,11 @@ public class MineraculousKamikotizationsClientEvents {
         }
     }
 
-    public static void onRegisterRenderer(EntityRenderersEvent.RegisterRenderers event) {
+    // Entities
+    public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(MineraculousKamikotizationsEntityTypes.ICE_CHARGE.get(), ThrownItemRenderer::new);
+        event.registerEntityRenderer(MineraculousKamikotizationsEntityTypes.GRIEF_TRACKING_ICE_CHARGE.get(), ThrownItemRenderer::new);
+        event.registerEntityRenderer(MineraculousKamikotizationsEntityTypes.GRIEF_TRACKING_LIGHTNING_BOLT.get(), LightningBoltRenderer::new);
+        event.registerEntityRenderer(MineraculousKamikotizationsEntityTypes.GRIEF_TRACKING_WIND_CHARGE.get(), WindChargeRenderer::new);
     }
 }

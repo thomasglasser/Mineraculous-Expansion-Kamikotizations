@@ -17,7 +17,6 @@ import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 public record MineraculousKamikotizationsLuckyCharmLoot(HolderLookup.Provider registries) implements LootTableSubProvider {
     @Override
     public void generate(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> biConsumer) {
-        // TODO: Add leather or something with the glider component in 1.22
         biConsumer.accept(
                 MineraculousKamikotizationsLuckyCharmLootKeys.WEATHER_CONTROL,
                 LootTable.lootTable()

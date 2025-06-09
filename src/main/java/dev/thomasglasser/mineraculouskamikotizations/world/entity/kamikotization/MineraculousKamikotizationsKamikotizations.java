@@ -9,14 +9,16 @@ import dev.thomasglasser.mineraculouskamikotizations.world.item.MineraculousKami
 import java.util.List;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.advancements.critereon.MinMaxBounds;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderSet;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 
 public class MineraculousKamikotizationsKamikotizations {
     public static final ResourceKey<Kamikotization> WEATHER_CONTROL = create("weather_control");
 
-    private static ResourceKey<Kamikotization> create(String id) {
-        return ResourceKey.create(MineraculousRegistries.KAMIKOTIZATION, MineraculousKamikotizations.modLoc(id));
+    private static ResourceKey<Kamikotization> create(String name) {
+        return ResourceKey.create(MineraculousRegistries.KAMIKOTIZATION, MineraculousKamikotizations.modLoc(name));
     }
 
     public static void bootstrap(BootstrapContext<Kamikotization> context) {
@@ -24,6 +26,6 @@ public class MineraculousKamikotizationsKamikotizations {
                 "Stormy Weather",
                 ItemPredicate.Builder.item().of(MineraculousKamikotizationsItemTags.UMBRELLA_TOOLS).withCount(MinMaxBounds.Ints.exactly(1)).build(),
                 Either.left(MineraculousKamikotizationsItems.WEATHER_CONTROL_PARASOL.toStack()),
-                List.of()));
+                HolderSet.empty()));
     }
 }
