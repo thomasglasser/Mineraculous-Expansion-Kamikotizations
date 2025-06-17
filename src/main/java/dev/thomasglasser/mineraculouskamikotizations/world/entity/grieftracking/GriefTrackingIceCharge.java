@@ -38,7 +38,7 @@ public class GriefTrackingIceCharge extends IceCharge {
         if (level() instanceof ServerLevel level && getOwner() != null) {
             Entity entity = result.getEntity();
             UUID ownerUuid = getOwner().getUUID();
-            AbilityReversionEntityData.get(level).putRecoverable(ownerUuid, entity);
+            AbilityReversionEntityData.get(level).putRevertable(ownerUuid, entity);
             Set<BlockPos> inside = getInsidePos(entity);
             int blocksWide = Mth.ceil(entity.getBbWidth());
             int blocksHigh = Mth.ceil(entity.getBbHeight());
@@ -55,7 +55,7 @@ public class GriefTrackingIceCharge extends IceCharge {
                     }
                 }
             }
-            AbilityReversionBlockData.get(level).putRecoverable(ownerUuid, altered);
+            AbilityReversionBlockData.get(level).putRevertable(ownerUuid, altered);
         }
         super.onHitEntity(result);
     }
@@ -77,7 +77,7 @@ public class GriefTrackingIceCharge extends IceCharge {
                     }
                 }
             }
-            AbilityReversionBlockData.get(level).putRecoverable(ownerUuid, altered);
+            AbilityReversionBlockData.get(level).putRevertable(ownerUuid, altered);
         }
         super.onHitBlock(result);
     }

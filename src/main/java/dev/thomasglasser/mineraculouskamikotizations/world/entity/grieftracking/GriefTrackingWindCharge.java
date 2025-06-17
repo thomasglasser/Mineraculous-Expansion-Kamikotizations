@@ -34,7 +34,7 @@ public class GriefTrackingWindCharge extends WindCharge {
     @Override
     protected void onHitEntity(EntityHitResult result) {
         if (level() instanceof ServerLevel level && getOwner() != null) {
-            AbilityReversionEntityData.get(level).putRecoverable(getOwner().getUUID(), result.getEntity());
+            AbilityReversionEntityData.get(level).putRevertable(getOwner().getUUID(), result.getEntity());
         }
         super.onHitEntity(result);
     }

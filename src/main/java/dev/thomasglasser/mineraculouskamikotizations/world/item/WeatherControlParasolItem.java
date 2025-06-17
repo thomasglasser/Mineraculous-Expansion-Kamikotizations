@@ -106,9 +106,9 @@ public class WeatherControlParasolItem extends Item implements EffectRevertingIt
     @Override
     public void revert(Entity entity) {
         ServerLevel level = (ServerLevel) entity.level();
-        AbilityReversionBlockData.get(level).recover(entity.getUUID(), (ServerLevel) entity.level());
+        AbilityReversionBlockData.get(level).revert(entity.getUUID(), (ServerLevel) entity.level());
         AbilityReversionItemData.get(level).markReverted(entity.getUUID());
-        AbilityReversionEntityData.get(level).revert(entity.getUUID(), (ServerLevel) entity.level());
+        AbilityReversionEntityData.get(level).revert(entity.getUUID(), (ServerLevel) entity.level(), e -> e.setTicksFrozen(0));
         KamikotizationData overworldData = entity.getServer().overworld().getDataStorage().computeIfAbsent(KamikotizationData.factory(), KamikotizationData.FILE_ID);
         if (overworldData.wasWeatherModified()) {
             entity.getServer().overworld().resetWeatherCycle();
