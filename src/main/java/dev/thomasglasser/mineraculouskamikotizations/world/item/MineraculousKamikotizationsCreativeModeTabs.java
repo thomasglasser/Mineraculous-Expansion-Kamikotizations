@@ -1,6 +1,6 @@
 package dev.thomasglasser.mineraculouskamikotizations.world.item;
 
-import dev.thomasglasser.mineraculous.world.item.MineraculousCreativeModeTabs;
+import dev.thomasglasser.mineraculous.impl.world.item.MineraculousCreativeModeTabs;
 import dev.thomasglasser.mineraculouskamikotizations.MineraculousKamikotizations;
 import dev.thomasglasser.tommylib.api.platform.TommyLibServices;
 import dev.thomasglasser.tommylib.api.registration.DeferredHolder;

@@ -1,6 +1,6 @@
 package dev.thomasglasser.mineraculouskamikotizations.data.loot;
 
-import dev.thomasglasser.mineraculous.world.level.storage.loot.providers.number.PowerLevelMultiplierGenerator;
+import dev.thomasglasser.mineraculous.api.world.level.storage.loot.providers.number.PowerLevelMultiplierGenerator;
 import dev.thomasglasser.mineraculouskamikotizations.world.level.storage.loot.MineraculousKamikotizationsLuckyCharmLootKeys;
 import java.util.function.BiConsumer;
 import net.minecraft.core.HolderLookup;

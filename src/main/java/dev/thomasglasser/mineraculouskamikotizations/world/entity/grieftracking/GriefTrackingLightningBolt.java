@@ -1,7 +1,7 @@
 package dev.thomasglasser.mineraculouskamikotizations.world.entity.grieftracking;
 
-import dev.thomasglasser.mineraculous.world.level.storage.AbilityReversionBlockData;
-import dev.thomasglasser.mineraculous.world.level.storage.AbilityReversionEntityData;
+import dev.thomasglasser.mineraculous.api.world.level.storage.AbilityReversionBlockData;
+import dev.thomasglasser.mineraculous.api.world.level.storage.AbilityReversionEntityData;
 import it.unimi.dsi.fastutil.objects.Reference2ReferenceOpenHashMap;
 import java.util.List;
 import java.util.Map;

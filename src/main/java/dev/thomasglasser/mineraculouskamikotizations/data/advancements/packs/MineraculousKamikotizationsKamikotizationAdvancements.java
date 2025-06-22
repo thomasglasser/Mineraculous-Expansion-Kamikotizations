@@ -1,7 +1,7 @@
 package dev.thomasglasser.mineraculouskamikotizations.data.advancements.packs;
 
-import dev.thomasglasser.mineraculous.advancements.critereon.TransformKamikotizationTrigger;
-import dev.thomasglasser.mineraculous.world.item.armor.MineraculousArmors;
+import dev.thomasglasser.mineraculous.api.advancements.critereon.TransformKamikotizationTrigger;
+import dev.thomasglasser.mineraculous.api.world.item.armor.MineraculousArmors;
 import dev.thomasglasser.mineraculouskamikotizations.MineraculousKamikotizations;
 import dev.thomasglasser.mineraculouskamikotizations.world.entity.kamikotization.MineraculousKamikotizationsKamikotizations;
 import dev.thomasglasser.mineraculouskamikotizations.world.item.MineraculousKamikotizationsItems;
@@ -17,7 +17,7 @@ public class MineraculousKamikotizationsKamikotizationAdvancements extends Exten
 
     @Override
     public void generate(HolderLookup.Provider provider) {
-        AdvancementHolder root = builder("root", MineraculousArmors.KAMIKOTIZATION.HEAD.toStack(), "Kamikotizations", "Canon kamikotizations")
+        AdvancementHolder root = builder("root", MineraculousArmors.KAMIKOTIZATION.head().toStack(), "Kamikotizations", "Canon kamikotizations")
                 .background(MineraculousKamikotizations.modLoc("textures/gui/advancements/backgrounds/kamikotization.png"))
                 .toast(false)
                 .announce(false)

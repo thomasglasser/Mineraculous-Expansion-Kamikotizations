@@ -1,6 +1,6 @@
 package dev.thomasglasser.mineraculouskamikotizations.data.models;
 
-import dev.thomasglasser.mineraculous.client.renderer.item.MineraculousItemProperties;
+import dev.thomasglasser.mineraculous.api.client.renderer.item.MineraculousItemProperties;
 import dev.thomasglasser.mineraculouskamikotizations.MineraculousKamikotizations;
 import dev.thomasglasser.mineraculouskamikotizations.world.item.MineraculousKamikotizationsItems;
 import dev.thomasglasser.tommylib.api.data.models.ExtendedItemModelProvider;

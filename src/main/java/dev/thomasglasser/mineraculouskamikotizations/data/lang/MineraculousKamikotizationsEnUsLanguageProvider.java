@@ -1,6 +1,6 @@
 package dev.thomasglasser.mineraculouskamikotizations.data.lang;
 
-import dev.thomasglasser.mineraculous.data.lang.MineraculousEnUsLanguageProvider;
+import dev.thomasglasser.mineraculous.impl.data.lang.MineraculousEnUsLanguageProvider;
 import dev.thomasglasser.mineraculouskamikotizations.MineraculousKamikotizations;
 import dev.thomasglasser.mineraculouskamikotizations.world.entity.MineraculousKamikotizationsEntityTypes;
 import dev.thomasglasser.mineraculouskamikotizations.world.entity.kamikotization.MineraculousKamikotizationsKamikotizations;
