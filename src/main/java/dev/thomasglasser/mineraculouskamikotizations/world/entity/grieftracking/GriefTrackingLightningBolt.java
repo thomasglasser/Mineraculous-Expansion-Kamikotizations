@@ -30,7 +30,7 @@ public class GriefTrackingLightningBolt extends LightningBolt {
                     new AABB(this.getX() - 3.0, this.getY() - 3.0, this.getZ() - 3.0, this.getX() + 3.0, this.getY() + 6.0 + 3.0, this.getZ() + 3.0),
                     Entity::isAlive);
             for (Entity entity : hit)
-                AbilityReversionEntityData.get(level).putRevertable(getCause().getUUID(), entity);
+                AbilityReversionEntityData.get(level).putRevertible(getCause().getUUID(), entity);
         }
         super.tick();
     }
@@ -59,7 +59,7 @@ public class GriefTrackingLightningBolt extends LightningBolt {
                     alteredBlocks.put(mutable, blockstate);
                 }
             }
-            AbilityReversionBlockData.get(level).putRevertable(getCause().getUUID(), alteredBlocks);
+            AbilityReversionBlockData.get(level).putRevertible(getCause().getUUID(), alteredBlocks);
         }
     }
 }
