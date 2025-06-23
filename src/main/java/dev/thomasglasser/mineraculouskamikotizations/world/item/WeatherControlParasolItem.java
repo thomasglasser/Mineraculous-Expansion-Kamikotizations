@@ -22,6 +22,7 @@ import java.util.function.Supplier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.server.level.ServerLevel;
@@ -148,15 +149,15 @@ public class WeatherControlParasolItem extends Item implements EffectRevertingIt
 
         private static final List<Ability> VALUES_LIST = new ReferenceArrayList<>(values());
 
-        private final String translationKey;
+        private final Component displayName;
 
         Ability() {
-            this.translationKey = MineraculousKamikotizationsItems.WEATHER_CONTROL_PARASOL.getId().toLanguageKey("ability", getSerializedName());
+            this.displayName = Component.translatable(MineraculousKamikotizationsItems.WEATHER_CONTROL_PARASOL.getId().toLanguageKey("ability", getSerializedName()));
         }
 
         @Override
-        public String translationKey() {
-            return translationKey;
+        public Component displayName() {
+            return displayName;
         }
 
         @Override

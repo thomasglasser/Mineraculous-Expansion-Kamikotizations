@@ -1,6 +1,6 @@
 package dev.thomasglasser.mineraculouskamikotizations.data.advancements.packs;
 
-import dev.thomasglasser.mineraculous.api.advancements.critereon.TransformKamikotizationTrigger;
+import dev.thomasglasser.mineraculous.api.advancements.critereon.TransformedKamikotizationTrigger;
 import dev.thomasglasser.mineraculous.api.world.item.armor.MineraculousArmors;
 import dev.thomasglasser.mineraculouskamikotizations.MineraculousKamikotizations;
 import dev.thomasglasser.mineraculouskamikotizations.world.entity.kamikotization.MineraculousKamikotizationsKamikotizations;
@@ -21,12 +21,12 @@ public class MineraculousKamikotizationsKamikotizationAdvancements extends Exten
                 .background(MineraculousKamikotizations.modLoc("textures/gui/advancements/backgrounds/kamikotization.png"))
                 .toast(false)
                 .announce(false)
-                .trigger("get_kamikotized", TransformKamikotizationTrigger.TriggerInstance.transformed())
+                .trigger("get_kamikotized", TransformedKamikotizationTrigger.TriggerInstance.transformed())
                 .build();
 
         AdvancementHolder transformWeatherControl = builder("transform_weather_control", MineraculousKamikotizationsItems.WEATHER_CONTROL_PARASOL.toStack(), "Weather Control", "Show the world who the best weather player really is...")
                 .parent(root)
-                .trigger("transform_weather_control", TransformKamikotizationTrigger.TriggerInstance.transformed(MineraculousKamikotizationsKamikotizations.WEATHER_CONTROL))
+                .trigger("transform_weather_control", TransformedKamikotizationTrigger.TriggerInstance.transformed(MineraculousKamikotizationsKamikotizations.WEATHER_CONTROL))
                 .build();
     }
 }
