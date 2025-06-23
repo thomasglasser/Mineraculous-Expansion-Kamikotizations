@@ -2,7 +2,7 @@ package dev.thomasglasser.mineraculouskamikotizations.data.modonomicons.mineracu
 
 import com.klikli_dev.modonomicon.api.datagen.AddToCategoryProvider;
 import com.klikli_dev.modonomicon.api.datagen.ModonomiconProviderBase;
-import dev.thomasglasser.mineraculous.data.modonomicons.wiki.kamikotizations.KamikotizationsCategoryProvider;
+import dev.thomasglasser.mineraculous.impl.data.modonomicons.wiki.kamikotizations.KamikotizationsCategoryProvider;
 
 public class AddToKamikotizationsCategoryProvider extends AddToCategoryProvider {
     public AddToKamikotizationsCategoryProvider(ModonomiconProviderBase parent) {

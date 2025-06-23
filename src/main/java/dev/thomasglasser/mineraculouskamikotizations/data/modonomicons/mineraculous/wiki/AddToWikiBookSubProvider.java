@@ -1,8 +1,8 @@
 package dev.thomasglasser.mineraculouskamikotizations.data.modonomicons.mineraculous.wiki;
 
 import com.klikli_dev.modonomicon.api.datagen.AddToBookSubProvider;
-import dev.thomasglasser.mineraculous.Mineraculous;
-import dev.thomasglasser.mineraculous.data.modonomicons.wiki.WikiBookSubProvider;
+import dev.thomasglasser.mineraculous.impl.Mineraculous;
+import dev.thomasglasser.mineraculous.impl.data.modonomicons.wiki.WikiBookSubProvider;
 import dev.thomasglasser.mineraculouskamikotizations.MineraculousKamikotizations;
 import dev.thomasglasser.mineraculouskamikotizations.data.modonomicons.mineraculous.wiki.kamikotizations.AddToKamikotizationsCategoryProvider;
 import java.util.function.BiConsumer;
