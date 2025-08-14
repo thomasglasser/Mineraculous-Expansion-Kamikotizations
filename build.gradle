@@ -203,7 +203,7 @@ tasks.processResources.dependsOn generateModMetadata
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
-build.dependsOn immaculateCheck
+compileJava.dependsOn immaculateCheck
 
 immaculate {
 	workflows.register('java') {
