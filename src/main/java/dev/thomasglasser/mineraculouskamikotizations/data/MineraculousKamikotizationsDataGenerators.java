@@ -1,24 +1,19 @@
 package dev.thomasglasser.mineraculouskamikotizations.data;
 
-import dev.thomasglasser.mineraculous.core.registries.MineraculousRegistries;
+import dev.thomasglasser.mineraculous.api.core.registries.MineraculousRegistries;
 import dev.thomasglasser.mineraculouskamikotizations.MineraculousKamikotizations;
 import dev.thomasglasser.mineraculouskamikotizations.data.advancements.MineraculousKamikotizationsAdvancementProvider;
 import dev.thomasglasser.mineraculouskamikotizations.data.datamaps.MineraculousKamikotizationsDataMapProvider;
 import dev.thomasglasser.mineraculouskamikotizations.data.lang.MineraculousKamikotizationsEnUsLanguageProvider;
 import dev.thomasglasser.mineraculouskamikotizations.data.loot.MineraculousKamikotizationsLootTables;
+import dev.thomasglasser.mineraculouskamikotizations.data.models.MineraculousKamikotizationsItemModelProvider;
 import dev.thomasglasser.mineraculouskamikotizations.data.modonomicons.MineraculousKamikotizationsBookProvider;
 import dev.thomasglasser.mineraculouskamikotizations.data.recipes.MineraculousKamikotizationsRecipeProvider;
 import dev.thomasglasser.mineraculouskamikotizations.data.tags.MineraculousKamikotizationsItemTagsProvider;
 import dev.thomasglasser.mineraculouskamikotizations.world.entity.kamikotization.MineraculousKamikotizationsKamikotizations;
-import dev.thomasglasser.tommylib.api.data.info.ModRegistryDumpReport;
-import java.util.Set;
-import java.util.concurrent.CompletableFuture;
-import net.minecraft.core.HolderLookup;
+import dev.thomasglasser.tommylib.api.data.DataGenerationUtils;
+import dev.thomasglasser.tommylib.api.data.tags.EmptyBlockTagsProvider;
 import net.minecraft.core.RegistrySetBuilder;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.PackOutput;
-import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 public class MineraculousKamikotizationsDataGenerators {
@@ -26,27 +21,18 @@ public class MineraculousKamikotizationsDataGenerators {
             .add(MineraculousRegistries.KAMIKOTIZATION, MineraculousKamikotizationsKamikotizations::bootstrap);
 
     public static void onGatherData(GatherDataEvent event) {
-        DataGenerator generator = event.getGenerator();
-        PackOutput packOutput = generator.getPackOutput();
-        CompletableFuture<HolderLookup.Provider> registries = event.getLookupProvider();
-        ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
+        // Server
+        event.createDatapackRegistryObjects(BUILDER);
+        DataGenerationUtils.createRegistryDumpReport(event, MineraculousKamikotizations.MOD_ID);
+        DataGenerationUtils.createBlockAndItemTags(event, EmptyBlockTagsProvider::new, MineraculousKamikotizationsItemTagsProvider::new);
+        event.createProvider(MineraculousKamikotizationsDataMapProvider::new);
+        event.createProvider(MineraculousKamikotizationsLootTables::new);
+        event.createProvider(MineraculousKamikotizationsRecipeProvider::new);
 
-        boolean includeServer = event.includeServer();
-        boolean includeClient = event.includeClient();
+        // Common
+        DataGenerationUtils.createLangDependent(event, MineraculousKamikotizationsEnUsLanguageProvider::new, MineraculousKamikotizationsAdvancementProvider::new, MineraculousKamikotizationsBookProvider::new);
 
-        MineraculousKamikotizationsEnUsLanguageProvider enUs = new MineraculousKamikotizationsEnUsLanguageProvider(packOutput);
-
-        DatapackBuiltinEntriesProvider datapackBuiltinEntriesProvider = new DatapackBuiltinEntriesProvider(packOutput, registries, BUILDER, Set.of(MineraculousKamikotizations.MOD_ID));
-        generator.addProvider(includeServer, datapackBuiltinEntriesProvider);
-        registries = datapackBuiltinEntriesProvider.getRegistryProvider();
-        generator.addProvider(includeServer, new ModRegistryDumpReport(packOutput, MineraculousKamikotizations.MOD_ID, registries));
-        generator.addProvider(includeServer, new MineraculousKamikotizationsItemTagsProvider(packOutput, registries, CompletableFuture.completedFuture(null), existingFileHelper));
-        generator.addProvider(includeServer, new MineraculousKamikotizationsAdvancementProvider(packOutput, registries, existingFileHelper, enUs));
-        generator.addProvider(includeServer, new MineraculousKamikotizationsDataMapProvider(packOutput, registries));
-        generator.addProvider(includeServer, new MineraculousKamikotizationsLootTables(packOutput, registries));
-        generator.addProvider(includeServer, new MineraculousKamikotizationsRecipeProvider(packOutput, registries));
-        generator.addProvider(includeServer, new MineraculousKamikotizationsBookProvider(packOutput, registries, enUs::add));
-
-        generator.addProvider(includeClient, enUs);
+        // Client
+        DataGenerationUtils.createProvider(event, MineraculousKamikotizationsItemModelProvider::new);
     }
 }
