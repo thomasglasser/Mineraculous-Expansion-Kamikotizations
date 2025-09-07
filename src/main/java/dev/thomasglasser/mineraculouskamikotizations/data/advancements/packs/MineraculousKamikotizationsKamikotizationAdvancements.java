@@ -24,7 +24,7 @@ public class MineraculousKamikotizationsKamikotizationAdvancements extends Exten
                 .trigger("get_kamikotized", TransformedKamikotizationTrigger.TriggerInstance.transformed())
                 .build();
 
-        AdvancementHolder transformWeatherControl = builder("transform_weather_control", MineraculousKamikotizationsItems.WEATHER_CONTROL_PARASOL.toStack(), "Weather Control", "Show the world who the best weather player really is...")
+        AdvancementHolder transformWeatherControl = builder("transform_weather_control", MineraculousKamikotizationsItems.WEATHER_CONTROL_PARASOL.toStack(), "Grab an Umbrella", "Show the world who the best weather player really is...")
                 .parent(root)
                 .trigger("transform_weather_control", TransformedKamikotizationTrigger.TriggerInstance.transformed(MineraculousKamikotizationsKamikotizations.WEATHER_CONTROL))
                 .build();
